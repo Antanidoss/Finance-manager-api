@@ -11,3 +11,16 @@ C:\IT\c#\Проекты\FinanceManager\FinanceManager.Persistence\bin\Debug\netc
 C:\IT\c#\Проекты\FinanceManager\FinanceManager.Persistence\obj\Debug\netcoreapp3.1\FinanceManager.Persistence.csproj.CopyComplete
 C:\IT\c#\Проекты\FinanceManager\FinanceManager.Persistence\obj\Debug\netcoreapp3.1\FinanceManager.Persistence.dll
 C:\IT\c#\Проекты\FinanceManager\FinanceManager.Persistence\obj\Debug\netcoreapp3.1\FinanceManager.Persistence.pdb
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\bin\Debug\netcoreapp3.1\FinanceManager.Persistence.deps.json
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\bin\Debug\netcoreapp3.1\FinanceManager.Persistence.dll
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\bin\Debug\netcoreapp3.1\FinanceManager.Persistence.pdb
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\bin\Debug\netcoreapp3.1\FinanceManager.Application.dll
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\bin\Debug\netcoreapp3.1\FinanceManager.Domain.dll
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\bin\Debug\netcoreapp3.1\FinanceManager.Application.pdb
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\bin\Debug\netcoreapp3.1\FinanceManager.Domain.pdb
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\obj\Debug\netcoreapp3.1\FinanceManager.Persistence.csprojAssemblyReference.cache
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\obj\Debug\netcoreapp3.1\FinanceManager.Persistence.AssemblyInfoInputs.cache
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\obj\Debug\netcoreapp3.1\FinanceManager.Persistence.AssemblyInfo.cs
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\obj\Debug\netcoreapp3.1\FinanceManager.Persistence.csproj.CopyComplete
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\obj\Debug\netcoreapp3.1\FinanceManager.Persistence.dll
+C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Persistence\obj\Debug\netcoreapp3.1\FinanceManager.Persistence.pdb
