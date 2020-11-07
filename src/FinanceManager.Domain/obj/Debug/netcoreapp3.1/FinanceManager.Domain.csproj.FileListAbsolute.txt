@@ -1,0 +1,8 @@
+C:\IT\c#\Проекты\FinanceManager\FinanceManager.Domain\bin\Debug\netcoreapp3.1\FinanceManager.Domain.deps.json
+C:\IT\c#\Проекты\FinanceManager\FinanceManager.Domain\bin\Debug\netcoreapp3.1\FinanceManager.Domain.dll
+C:\IT\c#\Проекты\FinanceManager\FinanceManager.Domain\obj\Debug\netcoreapp3.1\FinanceManager.Domain.csprojAssemblyReference.cache
+C:\IT\c#\Проекты\FinanceManager\FinanceManager.Domain\obj\Debug\netcoreapp3.1\FinanceManager.Domain.AssemblyInfoInputs.cache
+C:\IT\c#\Проекты\FinanceManager\FinanceManager.Domain\obj\Debug\netcoreapp3.1\FinanceManager.Domain.AssemblyInfo.cs
+C:\IT\c#\Проекты\FinanceManager\FinanceManager.Domain\bin\Debug\netcoreapp3.1\FinanceManager.Domain.pdb
+C:\IT\c#\Проекты\FinanceManager\FinanceManager.Domain\obj\Debug\netcoreapp3.1\FinanceManager.Domain.dll
+C:\IT\c#\Проекты\FinanceManager\FinanceManager.Domain\obj\Debug\netcoreapp3.1\FinanceManager.Domain.pdb
