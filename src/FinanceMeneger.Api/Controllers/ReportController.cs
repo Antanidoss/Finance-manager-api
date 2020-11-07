@@ -31,10 +31,9 @@ namespace FinanceManager.Api.Controllers
         }
 
         [HttpGet("get/{reportId}")]
-        public int /*Task<ReportDTO>*/ GetReportById(int reportId)
+        public async Task<ReportDTO> GetReportById(int reportId)
         {
-            //return await _mediator.Send(new GetReportByIdQuery(reportId));
-            return reportId;
+            return await _mediator.Send(new GetReportByIdQuery(reportId));
         }
 
         [HttpDelete("remove/{reportId}")]
