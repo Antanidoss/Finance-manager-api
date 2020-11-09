@@ -25,30 +25,30 @@ namespace FinanceManager.Api.Controllers
         }
 
         [HttpPost("add")]
-        public async Task AddReport(ReportCreateModel model)
+        public async Task AddReport([FromQuery]ReportCreateModel model)
         {
             await _mediator.Send(new AddReportCommand(model.AmountSpent, model.DescriptionsOfExpenses, model.AppUserId));
         }
 
-        [HttpGet("get/{reportId}")]
+        [HttpGet("get/{id}")]
         public async Task<ReportDTO> GetReportById(int reportId)
         {
             return await _mediator.Send(new GetReportByIdQuery(reportId));
         }
 
-        [HttpDelete("remove/{reportId}")]
+        [HttpDelete("remove/{id}")]
         public async Task RemoveReport(int reportId)
         {
             await _mediator.Send(new RemoveReportCommand(reportId));
         }
 
         [HttpPut("update")]
-        public async Task UpdateReport(ReportUpdateModel model)
+        public async Task UpdateReport([FromQuery]ReportUpdateModel model)
         {
             await _mediator.Send(new UpdateReportCommand(model.AmountSpent, model.DescriptionsOfExpenses, model.ReportId));
         }
 
-        [HttpGet("get/{skip}/{take}")]
+        [HttpGet("get/{skip}&{take}")]
         public async Task<IEnumerable<ReportDTO>> GetReports(int skip, int take)
         {
             return (await _mediator.Send(new GetReportsQuery(skip, take)));

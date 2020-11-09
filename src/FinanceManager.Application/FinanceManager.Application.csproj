@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DailyReports\Command\**" />
+    <EmbeddedResource Remove="DailyReports\Command\**" />
+    <None Remove="DailyReports\Command\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="FluentValidation" Version="9.2.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -15,10 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinanceManager.Domain\FinanceManager.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DailyReports\Command\" />
   </ItemGroup>
 
 </Project>

@@ -24,8 +24,8 @@ namespace FinanceManager.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("token/{token}")]
-        public async Task<Token> GenerateToken(CreateTokenModel model)
+        [HttpPost("getToken")]
+        public async Task<Token> GenerateToken([FromQuery] CreateTokenModel model)
         {
             return await _mediator.Send(new GenerateTokenQuery(model.Name, model.Email, model.Password));
         }
@@ -36,7 +36,7 @@ namespace FinanceManager.Api.Controllers
             return await _mediator.Send(new CreateUserCommand(model.Name, model.Email, model.Password));
         }
 
-        [HttpPost("get/{userId}")]
+        [HttpPost("get/{id}")]
         public async Task<AppUserDTO> GetUserById(string userId)
         {
             return await _mediator.Send(new GetUserByIdQuery(userId));

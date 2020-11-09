@@ -29,10 +29,10 @@ namespace FinanceManager.Infastructure.Identity
 
             var result = await _userManager.CreateAsync(new AppUser() { UserName = name, Email = email }, password);
 
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync(email), "user");
-            }
+            //if (result.Succeeded)
+            //{
+            //    await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync(email), "user");
+            //}
 
             return result.ToApplicationResult();
         }

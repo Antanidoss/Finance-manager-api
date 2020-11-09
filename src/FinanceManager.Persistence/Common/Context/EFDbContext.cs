@@ -12,5 +12,12 @@ namespace FinanceManager.Persistence.Common.Context
 
         public DbSet<Report> Reports { get; set; }
         public DbSet<DailyReport> DailyReports { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Report>().ToTable("Report");
+            modelBuilder.Entity<DailyReport>().ToTable("DailyReport");
+        }
     }
 }

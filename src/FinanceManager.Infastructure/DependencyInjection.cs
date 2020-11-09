@@ -1,13 +1,11 @@
 ﻿using FinanceManager.Application.Common.Interfaces;
 using FinanceManager.Domain.Entities;
 using FinanceManager.Infastructure.Identity;
+using FinanceManager.Infastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FinanceManager.Infastructure
 {
@@ -20,7 +18,7 @@ namespace FinanceManager.Infastructure
 
             services.AddIdentity<AppUser, IdentityRole>(option =>
             {
-
+                option.Tokens.AuthenticatorIssuer = AuthOptions.ISSUER;
             }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             services.AddScoped<IUserManagerService, UserManagerService>();

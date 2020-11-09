@@ -7,11 +7,11 @@ namespace FinanceManager.Infastructure.Models
 {
     internal class AuthOptions
     {
-		public const string ISSUER = "BookOfRecipesServer";
+		public const string ISSUER = "FinanceManagerServer";
 
-		public const string AUDIENCE = "BookOfRecipesClient";
+		public const string AUDIENCE = "FinanceManagerClient";
 
-		const string Key = "12456742780777";
+		const string Key = "124567secret80ar";
 
 		public const int LIFETIME = 1;
 

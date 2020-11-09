@@ -23,9 +23,9 @@ namespace FinanceManager.Api.Controllers
         }
 
         [HttpGet("get/{id}")]
-        public async Task<DailyReportDTO> GetDailyReportById(GetDailyReportByIdQuery query)
+        public async Task<DailyReportDTO> GetDailyReportById(int dailyReportId)
         {
-            return await _mediator.Send(query);
+            return await _mediator.Send(new GetDailyReportByIdQuery(dailyReportId));
         }
 
         [HttpGet("get/{skip}&{take}")]
