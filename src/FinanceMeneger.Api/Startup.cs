@@ -1,8 +1,8 @@
 using FinanceManager.Application;
 using FinanceManager.Infastructure;
 using FinanceManager.Persistence;
-using FinanceManeger.Api.Helpers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -23,18 +23,21 @@ namespace FinanceManeger.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRouting();
+
+            services.AddApplication();
             services.AddIfastructure(Configuration);           
             services.AddPersistence(Configuration);
-            services.AddApplication();
+            services.AddServices();            
 
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
+            });           
 
             services.AddControllers();
 
-            services.AddCors();
+            services.AddCors();            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,6 +49,12 @@ namespace FinanceManeger.Api
 
             app.UseHttpsRedirection();
 
+            app.UseCors(x =>
+            x.WithOrigins("http://localhost:3000")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+
             app.UseRouting();
 
             app.UseSwagger();
@@ -54,32 +63,26 @@ namespace FinanceManeger.Api
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            app.UseAuthorization();
-            app.UseAuthentication();
-
-            app.UseCors(x =>
-            x.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-
-            app.UseCookiePolicy(new CookiePolicyOptions()
+            app.UseCookiePolicy(new CookiePolicyOptions
             {
                 MinimumSameSitePolicy = SameSiteMode.Strict,
-                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
-                Secure = CookieSecurePolicy.Always,
+                HttpOnly = HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always
             });
 
-            //app.Use(async (context, next) =>
-            //{
-            //    var token = context.Request.Cookies[".AspNetCore.Application.Id"];
-            //    if (!string.IsNullOrEmpty(token))
-            //    {
-            //        context.Request.Headers.Add("Authorization", "Bearer" + token);
-            //    }
+            app.UseAuthorization();
 
-            //    await next();
-            //});
-            app.UseMiddleware<JwtMiddleware>();
+            app.Use(async (context, next) =>
+            {
+                var token = context.Request.Cookies[".AspNetCore.Application.Id"];
+                if (!string.IsNullOrEmpty(token))
+                    context.Request.Headers.Add("Authorization", "Bearer " + token);
+
+                await next();
+            });
+
+            app.UseAuthentication();
+           
 
             app.UseEndpoints(endpoints =>
             {

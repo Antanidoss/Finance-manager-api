@@ -1,12 +1,14 @@
 ﻿using FinanceManager.Application.Common.Interfaces;
+using FinanceManager.Application.Common.Models;
 using FinanceManager.Domain.Entities;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Application.Reports.Commands.AddReport
 {
-    public class AddReportCommnadHandler : IRequestHandler<AddReportCommand>
+    public class AddReportCommnadHandler : IRequestHandler<AddReportCommand, Result>
     {
         private readonly IReportRepository _reportRepository;
 
@@ -18,20 +20,24 @@ namespace FinanceManager.Application.Reports.Commands.AddReport
             _dailyReportRepository = dailyReportRepository;
         }
 
-        public async Task<Unit> Handle(AddReportCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(AddReportCommand request, CancellationToken cancellationToken)
         {
             var report = new Report(request.AmountSpent, request.DescriptionsOfExpenses);
 
-            var lastDailyReport = await _dailyReportRepository.GetLastDailyReportAsync(request.AppUserId);
+            var lastDailyReport = await _dailyReportRepository.GetLastDailyReportAsync(request.AppUserId);           
 
-            if(lastDailyReport == null)
+            if (lastDailyReport != null && lastDailyReport.TimeOfCreate.CompareTo(DateTime.Today) == 0)
             {
-                report.DailyReportId = lastDailyReport.Id;
+                report.DailyReport = lastDailyReport;
+            }
+            else
+            {
+                report.DailyReport = new DailyReport() { AppUserId = request.AppUserId };
             }
 
             await _reportRepository.AddReportAsync(report);
 
-            return Unit.Value;
+            return Result.Success();
         }
     }
 }

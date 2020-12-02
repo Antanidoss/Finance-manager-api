@@ -23,7 +23,7 @@ namespace FinanceManager.Application.User.Command.GetUserById
 
         public async Task<AppUserDTO> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<AppUserDTO>(await _userManagerService.GetAppUserByIdAsync(request.AppUserId));
+            return _mapper.Map<AppUserDTO>(await _userManagerService.GetUserByIdAsync(request.AppUserId));
         }
     }
 }

@@ -14,7 +14,7 @@ namespace FinanceManager.Infastructure.Models
             return result.Succeeded
                 ? Result.Success()
                 : Result.Failure(result.Errors.Select(e => e.Description));
-        }
+        }       
 
         public static Result EmailIsBusy()
         {

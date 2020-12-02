@@ -6,6 +6,7 @@ namespace FinanceManager.Application.Common.DTO
 {
     public class AppUserDTO
     {
-        public List<DailyReportDTO> DailyReports { get; set; }
+        public string Id { get; set; }
+        public string UserName { get; set; }       
     }
 }

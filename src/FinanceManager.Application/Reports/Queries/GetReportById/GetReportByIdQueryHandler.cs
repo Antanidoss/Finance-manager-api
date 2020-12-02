@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FinanceManager.Application.Common.DTO;
+using FinanceManager.Application.Common.Exceptions;
 using FinanceManager.Application.Common.Interfaces;
 using MediatR;
 using System;
@@ -24,7 +25,14 @@ namespace FinanceManager.Application.Reports.Queries.GetReportById
 
         public async Task<ReportDTO> Handle(GetReportByIdQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<ReportDTO>(await _reportRepository.GetReportByIdAsync(request.ReportId));
+            var reports = await _reportRepository.GetReportByIdAsync(request.ReportId);
+
+            if(reports == null)
+            {
+                throw new NotFoundException(nameof(reports), request.ReportId);
+            }
+
+            return _mapper.Map<ReportDTO>(reports);
         }
     }
 }

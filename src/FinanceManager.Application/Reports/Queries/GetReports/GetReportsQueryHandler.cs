@@ -23,6 +23,11 @@ namespace FinanceManager.Application.Reports.Queries.GetReports
 
         public async Task<IEnumerable<ReportDTO>> Handle(GetReportsQuery request, CancellationToken cancellationToken)
         {
+            if(request.Skip < 0 && request.Take <= 0)
+            {
+                throw new ArgumentException("Invalid input parameters (skip), (take)");
+            }
+
             var reports = await _reportRepository.GetReportsAsync(request.Skip, request.Take);
 
             return _mapper.Map<IEnumerable<ReportDTO>>(reports);

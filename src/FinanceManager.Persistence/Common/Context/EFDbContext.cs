@@ -16,8 +16,8 @@ namespace FinanceManager.Persistence.Common.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Report>().ToTable("Report");
-            modelBuilder.Entity<DailyReport>().ToTable("DailyReport");
+            modelBuilder.Entity<Report>().ToTable("Reports");
+            modelBuilder.Entity<DailyReport>().ToTable("DailyReports");
         }
     }
 }

@@ -8,11 +8,14 @@ namespace FinanceManager.Application.DailyReports.Query.GetDailyReportById
 {
     public class GetDailyReportByIdQuery : IRequest<DailyReportDTO>
     {
-        public int DailyReportId { get; }
+        public readonly int DailyReportId;
 
-        public GetDailyReportByIdQuery(int dailyReportId)
+        public readonly string AppUserId;
+
+        public GetDailyReportByIdQuery(int dailyReportId, string appUserId)
         {
             DailyReportId = dailyReportId;
+            AppUserId = appUserId;
         }
     }
 }

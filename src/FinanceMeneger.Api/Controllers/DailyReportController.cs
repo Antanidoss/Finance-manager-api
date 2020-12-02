@@ -1,43 +1,37 @@
-﻿using FinanceManager.Application.Common.DTO;
-using FinanceManager.Application.DailyReports.Query.GetDailyReportById;
-using FinanceManager.Application.DailyReports.Query.GetDailyReports;
-using FinanceManager.Application.DailyReports.Query.GetLastDailyReport;
-using MediatR;
+﻿using FinanceManager.Services.Common.Interfaces;
+using FinanceManager.Services.Common.Models.ViewModels.DailyReport;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class DailyReportController : ControllerBase
+    [System.Web.Http.Authorize]
+    public class DailyReportController : ApiController
     {
-        private readonly IMediator _mediator;
+        private readonly IDailyReportService _dailyReportService;
 
-        public DailyReportController(IMediator mediator)
+        public DailyReportController(IDailyReportService dailyReportService)
         {
-            _mediator = mediator;
+            _dailyReportService = dailyReportService;
         }
 
-        [HttpGet("get/{id}")]
-        public async Task<DailyReportDTO> GetDailyReportById(int dailyReportId)
+        [HttpGet("get/{dailyReportId}")]
+        public async Task<DailyReportViewModel> GetDailyReportById(int dailyReportId)
         {
-            return await _mediator.Send(new GetDailyReportByIdQuery(dailyReportId));
+            return await _dailyReportService.GetDailyReportByIdAsync(dailyReportId);
         }
 
         [HttpGet("get/{skip}&{take}")]
-        public async Task<IEnumerable<DailyReportDTO>> GetDailyReports(int skip, int take)
+        public async Task<GetDailyReportsResponceModel> GetDailyReports(int skip, int take)
         {
-            return await _mediator.Send(new GetDailyReportsQuery(skip, take));
+            return await _dailyReportService.GetDailyReportsAsync(skip, take);
         }
 
         [HttpGet("getLast")]
-        public async Task<DailyReportDTO> GetLastDailyReport(GetLastDailyReportQuery query)
+        public async Task<DailyReportViewModel> GetLastDailyReport()
         {
-            return await _mediator.Send(query);
+            return await _dailyReportService.GetLastDailyReport();
         }
     }
 }

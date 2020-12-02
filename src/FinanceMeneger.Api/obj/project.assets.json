@@ -230,6 +230,31 @@
           "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Http.Abstractions/2.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "2.2.0",
+          "System.Text.Encodings.Web": "4.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Http.Features/2.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "2.2.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore/3.1.9": {
         "type": "package",
         "dependencies": {
@@ -2521,6 +2546,24 @@
         },
         "runtime": {
           "bin/placeholder/FinanceManager.Persistence.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "FinanceManager.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "FinanceManager.Application": "1.0.0",
+          "FinanceManager.Infastructure": "1.0.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0"
+        },
+        "compile": {
+          "bin/placeholder/FinanceManager.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FinanceManager.Services.dll": {}
         }
       }
     }
@@ -2783,6 +2826,32 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
         "microsoft.aspnetcore.cryptography.keyderivation.3.1.9.nupkg.sha512",
         "microsoft.aspnetcore.cryptography.keyderivation.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Http.Abstractions/2.2.0": {
+      "sha512": "Nxs7Z1q3f1STfLYKJSVXCs1iBl+Ya6E8o4Oy1bCxJ/rNI44E/0f6tbsrVqAWfB7jlnJfyaAtIalBVxPKUPQb4Q==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.http.abstractions/2.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.xml",
+        "microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+        "microsoft.aspnetcore.http.abstractions.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Http.Features/2.2.0": {
+      "sha512": "ziFz5zH8f33En4dX81LW84I6XrYXKf9jg6aM39cM+LffN9KJahViKZ61dGMSO2gd3e+qe5yBRwsesvyqlZaSMg==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.http.features/2.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.xml",
+        "microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
+        "microsoft.aspnetcore.http.features.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore/3.1.9": {
@@ -8176,19 +8245,24 @@
       "type": "project",
       "path": "../FinanceManager.Persistence/FinanceManager.Persistence.csproj",
       "msbuildProject": "../FinanceManager.Persistence/FinanceManager.Persistence.csproj"
+    },
+    "FinanceManager.Services/1.0.0": {
+      "type": "project",
+      "path": "../FinanceManager.Services/FinanceManager.Services.csproj",
+      "msbuildProject": "../FinanceManager.Services/FinanceManager.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "FinanceManager.Application >= 1.0.0",
-      "FinanceManager.Infastructure >= 1.0.0",
       "FinanceManager.Persistence >= 1.0.0",
+      "FinanceManager.Services >= 1.0.0",
       "Microsoft.AspNet.WebApi.Core >= 5.2.7",
       "Microsoft.EntityFrameworkCore.Design >= 3.1.9",
       "Swashbuckle.AspNetCore >= 5.6.3",
       "Swashbuckle.AspNetCore.Swagger >= 5.6.3",
       "Swashbuckle.AspNetCore.SwaggerGen >= 5.6.3",
-      "Swashbuckle.AspNetCore.SwaggerUI >= 5.6.3"
+      "Swashbuckle.AspNetCore.SwaggerUI >= 5.6.3",
+      "System.Collections >= 4.3.0"
     ]
   },
   "packageFolders": {
@@ -8197,11 +8271,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceMeneger.Api\\FinanceManeger.Api.csproj",
-      "projectName": "FinanceManeger.Api",
-      "projectPath": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceMeneger.Api\\FinanceManeger.Api.csproj",
+      "projectUniqueName": "C:\\IT\\c#\\Новая папка\\src\\FinanceMeneger.Api\\FinanceManager.Api.csproj",
+      "projectName": "FinanceManager.Api",
+      "projectPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceMeneger.Api\\FinanceManager.Api.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceMeneger.Api\\obj\\",
+      "outputPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceMeneger.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8217,14 +8291,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Application\\FinanceManager.Application.csproj": {
-              "projectPath": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Application\\FinanceManager.Application.csproj"
+            "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Persistence\\FinanceManager.Persistence.csproj": {
+              "projectPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Persistence\\FinanceManager.Persistence.csproj"
             },
-            "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Infastructure\\FinanceManager.Infastructure.csproj": {
-              "projectPath": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Infastructure\\FinanceManager.Infastructure.csproj"
-            },
-            "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Persistence\\FinanceManager.Persistence.csproj": {
-              "projectPath": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Persistence\\FinanceManager.Persistence.csproj"
+            "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Services\\FinanceManager.Services.csproj": {
+              "projectPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Services\\FinanceManager.Services.csproj"
             }
           }
         }
@@ -8263,6 +8334,10 @@
           "Swashbuckle.AspNetCore.SwaggerUI": {
             "target": "Package",
             "version": "[5.6.3, )"
+          },
+          "System.Collections": {
+            "target": "Package",
+            "version": "[4.3.0, )"
           }
         },
         "imports": [

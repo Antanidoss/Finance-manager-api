@@ -6,6 +6,7 @@ using FinanceManager.Infastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,38 +16,94 @@ namespace FinanceManager.Infastructure.Identity
     {
         private readonly UserManager<AppUser> _userManager;
 
-        public UserManagerService(UserManager<AppUser> userManager)
+        private readonly SignInManager<AppUser> _signInManager;
+
+        public UserManagerService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        public async Task<Result> CreateUserAsync(string name, string password, string email)
+        public async Task<Result> AddToRoleAsync(string email, string roleName)
         {
-            if (await EmailIsBusy(email))
-            {
-                return IdentityResultExtensions.EmailIsBusy();
-            }
+            var appUser = await _userManager.FindByEmailAsync(email);
 
-            var result = await _userManager.CreateAsync(new AppUser() { UserName = name, Email = email }, password);
-
-            //if (result.Succeeded)
-            //{
-            //    await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync(email), "user");
-            //}
+            var result = await _userManager.AddToRoleAsync(appUser, roleName);
 
             return result.ToApplicationResult();
         }
 
-        public async Task<AppUser> GetAppUserByIdAsync(string appUserId)
+        public async Task<Result> CreateUserAsync(string name, string email, string password)
+        {
+            if (await CheckIsEmailBusy(email))
+            {
+                return IdentityResultExtensions.EmailIsBusy();
+            }
+
+            var user = new AppUser() { UserName = name, Email = email };
+            var result = await _userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+                result = await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync(email), "user");
+                await _signInManager.SignInAsync(user, true);
+            }
+
+            return result.ToApplicationResult();
+        }
+
+        public async Task<bool> CheckIsEmailBusy(string email)
+        {
+            return await _userManager.FindByEmailAsync(email) != null 
+                ? true 
+                : false;
+        }
+
+        public async Task<AppUser> GetUserByIdAsync(string appUserId)
         {
             return await _userManager.FindByIdAsync(appUserId);
         }
 
-        private async Task<bool> EmailIsBusy(string email)
+        public async Task SignOutAsync()
         {
-            return await _userManager.FindByEmailAsync(email) != null
-                ? true
-                : false;
+            await _signInManager.SignOutAsync();
+        }
+
+        public async Task<ClaimsPrincipal> GetPrincipal(string userEmail, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(userEmail);
+
+            if (user != null)
+            {
+                var check = await _userManager.CheckPasswordAsync(user, password);
+                if (check)
+                {
+                    await _signInManager.SignInAsync(user, true);
+                    var principal = await _signInManager.CreateUserPrincipalAsync(user);
+                    return principal;
+                }
+            }            
+
+            return null;           
+        }
+
+        public async Task<Result> PasswordSignInAsync(string email, string password, bool isParsistent)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if(user == null)
+            {
+                
+            }
+
+            var check = await _userManager.CheckPasswordAsync(user, password);
+            if (!check)
+            {
+
+            }
+
+            await _signInManager.PasswordSignInAsync(user, password, isParsistent, false);
+
+            return Result.Success();
         }
     }
 }

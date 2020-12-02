@@ -14,5 +14,6 @@ namespace FinanceManager.Application.Common.Interfaces
         Task<IEnumerable<Report>> GetReportsAsync(int skip, int take, Func<Report, bool> func);
         Task RemoveReportAsync(Report report);
         Task UpdateReportAsync(Report report);
+        Task<int> GetReportCount(int dailyReportId);
     }
 }

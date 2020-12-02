@@ -13,17 +13,7 @@ namespace FinanceManager.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             var assembly = typeof(DependencyInjection).Assembly;
-            services.AddMediatR(assembly);
-
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new ReportDTOProfile());
-                mc.AddProfile(new DailyReportDTOProfile());
-                mc.AddProfile(new AppUserDTOProfile());
-            });
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
+            services.AddMediatR(assembly);     
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipe<,>));
 
             return services;

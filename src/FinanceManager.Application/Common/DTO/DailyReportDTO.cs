@@ -8,6 +8,6 @@ namespace FinanceManager.Application.Common.DTO
     {
         public int Id { get; set; }
         public List<ReportDTO> Reports { get; set; }
-        public string TimeOfCreate { get; }
+        public string TimeOfCreate { get; set; }
     }
 }

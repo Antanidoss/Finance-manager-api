@@ -20,3 +20,14 @@ C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Application\obj\Debug\
 C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Application\obj\Debug\netcoreapp3.1\FinanceManager.Application.csproj.CopyComplete
 C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Application\obj\Debug\netcoreapp3.1\FinanceManager.Application.dll
 C:\IT\c#\Проекты\FinanceManager\src\FinanceManager.Application\obj\Debug\netcoreapp3.1\FinanceManager.Application.pdb
+C:\IT\c#\Новая папка\src\FinanceManager.Application\bin\Debug\netcoreapp3.1\FinanceManager.Application.deps.json
+C:\IT\c#\Новая папка\src\FinanceManager.Application\bin\Debug\netcoreapp3.1\FinanceManager.Application.dll
+C:\IT\c#\Новая папка\src\FinanceManager.Application\bin\Debug\netcoreapp3.1\FinanceManager.Application.pdb
+C:\IT\c#\Новая папка\src\FinanceManager.Application\bin\Debug\netcoreapp3.1\FinanceManager.Domain.dll
+C:\IT\c#\Новая папка\src\FinanceManager.Application\bin\Debug\netcoreapp3.1\FinanceManager.Domain.pdb
+C:\IT\c#\Новая папка\src\FinanceManager.Application\obj\Debug\netcoreapp3.1\FinanceManager.Application.csprojAssemblyReference.cache
+C:\IT\c#\Новая папка\src\FinanceManager.Application\obj\Debug\netcoreapp3.1\FinanceManager.Application.AssemblyInfoInputs.cache
+C:\IT\c#\Новая папка\src\FinanceManager.Application\obj\Debug\netcoreapp3.1\FinanceManager.Application.AssemblyInfo.cs
+C:\IT\c#\Новая папка\src\FinanceManager.Application\obj\Debug\netcoreapp3.1\FinanceManager.Application.csproj.CopyComplete
+C:\IT\c#\Новая папка\src\FinanceManager.Application\obj\Debug\netcoreapp3.1\FinanceManager.Application.dll
+C:\IT\c#\Новая папка\src\FinanceManager.Application\obj\Debug\netcoreapp3.1\FinanceManager.Application.pdb

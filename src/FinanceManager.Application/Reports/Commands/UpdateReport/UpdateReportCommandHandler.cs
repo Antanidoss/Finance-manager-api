@@ -1,5 +1,6 @@
 ﻿using FinanceManager.Application.Common.Exceptions;
 using FinanceManager.Application.Common.Interfaces;
+using FinanceManager.Application.Common.Models;
 using FinanceManager.Domain.Entities;
 using MediatR;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FinanceManager.Application.Reports.Commands.UpdateReport
 {
-    public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand>
+    public class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, Result>
     {
         private readonly IReportRepository _reportRepository;
 
@@ -19,7 +20,7 @@ namespace FinanceManager.Application.Reports.Commands.UpdateReport
             _reportRepository = reportRepository;
         }
 
-        public async Task<Unit> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
         {
             var report = await _reportRepository.GetReportByIdAsync(request.ReportId);
 
@@ -27,10 +28,14 @@ namespace FinanceManager.Application.Reports.Commands.UpdateReport
             {
                 throw new NotFoundException(nameof(report), request.ReportId);
             }
+            if(report.DailyReport.AppUserId != request.AppUserId)
+            {
+                return Result.Failure(new string[] { "Неверный id отчета" });
+            }
 
             await _reportRepository.UpdateReportAsync(new Report(request.AmountSpent, request.DescriptionsOfExpenses));
 
-            return Unit.Value;
+            return Result.Success();
         }
     }
 }

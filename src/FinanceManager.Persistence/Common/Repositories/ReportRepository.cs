@@ -27,7 +27,12 @@ namespace FinanceManager.Persistence.Common.Repositories
 
         public async Task<Report> GetReportByIdAsync(int reportId)
         {
-            return await _context.Reports.FirstOrDefaultAsync(r => r.Id == reportId);
+            return await _context.Reports.Include(p => p.DailyReport).FirstOrDefaultAsync(r => r.Id == reportId);
+        }
+
+        public async Task<int> GetReportCount(int dailyReportId)
+        {
+            return await _context.Reports.Where(p => p.DailyReportId == dailyReportId).CountAsync();
         }
 
         public async Task<IEnumerable<Report>> GetReportsAsync(int skip, int take)
@@ -41,7 +46,6 @@ namespace FinanceManager.Persistence.Common.Repositories
         public async Task<IEnumerable<Report>> GetReportsAsync(int skip, int take, Func<Report, bool> func)
         {
             return _context.Reports
-                .AsQueryable()
                 .Where(func)
                 .Skip(skip)
                 .Take(take)

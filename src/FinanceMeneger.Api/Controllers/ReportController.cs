@@ -1,57 +1,50 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using FinanceManager.Application.Common.DTO;
-using FinanceManager.Application.Reports.Commands.AddReport;
-using FinanceManager.Application.Reports.Commands.RemoveReport;
-using FinanceManager.Application.Reports.Commands.UpdateReport;
-using FinanceManager.Application.Reports.Queries.GetReportById;
-using FinanceManager.Application.Reports.Queries.GetReports;
-using FinanceManeger.Api.Models.CreateModel;
-using FinanceManeger.Api.Models.UpdateModel;
-using MediatR;
+﻿using System.Threading.Tasks;
+using FinanceManager.Application.Common.Models;
+using FinanceManager.Services.Common.Interfaces;
+using FinanceManager.Services.Common.Models.ViewModels.Report;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceManager.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class ReportController : ControllerBase
+    [System.Web.Http.Authorize]
+    public class ReportController : ApiController
     {
-        private readonly IMediator _mediator;
+        private readonly IReportService _reportService;
 
-        public ReportController(IMediator mediator)
+        public ReportController(IReportService reportService)
         {
-            _mediator = mediator;
+            _reportService = reportService;
         }
 
         [HttpPost("add")]
-        public async Task AddReport([FromQuery]ReportCreateModel model)
+        public async Task<Result> AddReport([FromQuery]ReportCreateModel model)
         {
-            await _mediator.Send(new AddReportCommand(model.AmountSpent, model.DescriptionsOfExpenses, model.AppUserId));
+            return await _reportService.AddReportAsync(model);
         }
 
-        [HttpGet("get/{id}")]
-        public async Task<ReportDTO> GetReportById(int reportId)
+        [HttpGet("get/{reportId}")]
+        public async Task<ReportViewModel> GetReportById(int reportId)
         {
-            return await _mediator.Send(new GetReportByIdQuery(reportId));
+            return await _reportService.GetReportByIdAsync(reportId);
         }
 
         [HttpDelete("remove/{id}")]
-        public async Task RemoveReport(int reportId)
+        public async Task<Result> RemoveReport(int reportId)
         {
-            await _mediator.Send(new RemoveReportCommand(reportId));
+            return await _reportService.RemoveReportAsync(reportId);
         }
 
         [HttpPut("update")]
-        public async Task UpdateReport([FromQuery]ReportUpdateModel model)
+        public async Task<Result> UpdateReport([FromQuery]ReportUpdateModel model)
         {
-            await _mediator.Send(new UpdateReportCommand(model.AmountSpent, model.DescriptionsOfExpenses, model.ReportId));
+            return await _reportService.UpdatereportAsync(model);
         }
 
-        [HttpGet("get/{skip}&{take}")]
-        public async Task<IEnumerable<ReportDTO>> GetReports(int skip, int take)
+        [HttpGet("get/{skip}&{take}&{dailyReportId}")]
+        public async Task<GetReportsResponceModel> GetReports(int skip, int take, int dailyReportId)
         {
-            return (await _mediator.Send(new GetReportsQuery(skip, take)));
+            return await _reportService.GetReportsAsync(skip, take, dailyReportId);
         }
     }
 }

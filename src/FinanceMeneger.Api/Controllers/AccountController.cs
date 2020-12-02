@@ -1,14 +1,9 @@
-﻿using FinanceManager.Application.Common.DTO;
-using FinanceManager.Application.Common.Models;
-using FinanceManager.Application.User.Command.CreateUser;
-using FinanceManager.Application.User.Command.GenerateToken;
-using FinanceManager.Application.User.Command.GetUserById;
+﻿using FinanceManager.Application.Common.Models;
+using FinanceManager.Services.Common.Interfaces;
+using FinanceManager.Services.Common.Models.ViewModels.AppUser;
+using FinanceManager.Services.Common.Models.ViewModels.Token;
 using FinanceManeger.Web.Models.CreateModel;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Api.Controllers
@@ -17,29 +12,43 @@ namespace FinanceManager.Api.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IUserService _userService;
 
-        public AccountController(IMediator mediator)
+        public AccountController(IUserService userService)
         {
-            _mediator = mediator;
+            _userService = userService;
+        }       
+
+        [HttpPost("reg")]
+        public async Task<Result> Registration([FromBody]RegistrationModel model)
+        {
+            return await _userService.RegistrationAsync(model);
+        }   
+        
+        [HttpPost("auth")]
+        public async Task<Result> Authentication([FromBody]AuthenticationModel model)
+        {
+            return await _userService.AuthenticationAsync(model);
         }
 
-        [HttpPost("getToken")]
-        public async Task<Token> GenerateToken([FromQuery] CreateTokenModel model)
+        [HttpGet("auth/me")]
+        public async Task<AuthenticationResponceModel> Authentication()
         {
-            return await _mediator.Send(new GenerateTokenQuery(model.Name, model.Email, model.Password));
+            return await _userService.GetCurrentUser();
         }
 
-        [HttpPost("create")]
-        public async Task<Result> CreateUser(CreateUserModel model)
+        [HttpGet("token")]
+        [System.Web.Http.Authorize]
+        public async Task<Token> GenerateToken([FromBody]TokenCreateModel model)
         {
-            return await _mediator.Send(new CreateUserCommand(model.Name, model.Email, model.Password));
+            return await _userService.GenerateToken(model);
         }
 
-        [HttpPost("get/{id}")]
-        public async Task<AppUserDTO> GetUserById(string userId)
+        [HttpGet("logout")]
+        [System.Web.Http.Authorize]
+        public async Task Logout()
         {
-            return await _mediator.Send(new GetUserByIdQuery(userId));
+            await _userService.Logout();
         }
     }
 }

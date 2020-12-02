@@ -10,11 +10,13 @@ namespace FinanceManager.Application.Reports.Queries.GetReportById
 {
     public class GetReportByIdQuery : IRequest<ReportDTO>
     {
-        public int ReportId;
+        public readonly int ReportId;
 
-        public GetReportByIdQuery(int reportId)
+        public readonly string AppUserId;
+        public GetReportByIdQuery(int reportId, string appUserId)
         {
             ReportId = reportId;
+            AppUserId = appUserId;
         }
     }
 }

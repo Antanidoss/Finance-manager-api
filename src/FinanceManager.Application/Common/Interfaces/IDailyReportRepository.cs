@@ -12,5 +12,6 @@ namespace FinanceManager.Application.Common.Interfaces
         Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take);
         Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, Func<DailyReport, bool> func);
         Task<DailyReport> GetLastDailyReportAsync(string appUserId);
+        Task<int> GetDailyReportCount(string appUserId);
     }
 }
