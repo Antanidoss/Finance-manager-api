@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FinanceManager.Infastructure\FinanceManager.Infastructure.csproj" />
     <ProjectReference Include="..\FinanceManager.Persistence\FinanceManager.Persistence.csproj" />
     <ProjectReference Include="..\FinanceManager.Services\FinanceManager.Services.csproj" />
   </ItemGroup>

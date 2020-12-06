@@ -1,7 +1,6 @@
 ﻿using FinanceManager.Application.Common.Models;
 using FinanceManager.Services.Common.Interfaces;
 using FinanceManager.Services.Common.Models.ViewModels.AppUser;
-using FinanceManager.Services.Common.Models.ViewModels.Token;
 using FinanceManeger.Web.Models.CreateModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -35,13 +34,6 @@ namespace FinanceManager.Api.Controllers
         public async Task<AuthenticationResponceModel> Authentication()
         {
             return await _userService.GetCurrentUser();
-        }
-
-        [HttpGet("token")]
-        [System.Web.Http.Authorize]
-        public async Task<Token> GenerateToken([FromBody]TokenCreateModel model)
-        {
-            return await _userService.GenerateToken(model);
         }
 
         [HttpGet("logout")]

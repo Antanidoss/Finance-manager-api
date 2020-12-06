@@ -24,16 +24,11 @@ namespace FinanceManager.Application.Reports.Commands.AddReport
         {
             var report = new Report(request.AmountSpent, request.DescriptionsOfExpenses);
 
-            var lastDailyReport = await _dailyReportRepository.GetLastDailyReportAsync(request.AppUserId);           
-
-            if (lastDailyReport != null && lastDailyReport.TimeOfCreate.CompareTo(DateTime.Today) == 0)
-            {
-                report.DailyReport = lastDailyReport;
-            }
-            else
-            {
-                report.DailyReport = new DailyReport() { AppUserId = request.AppUserId };
-            }
+            var lastDailyReport = await _dailyReportRepository.GetLastDailyReportAsync(request.AppUserId);
+        
+            report.DailyReport = lastDailyReport != null && lastDailyReport.TimeOfCreate.CompareTo(DateTime.Today) == 0
+                ? lastDailyReport
+                : report.DailyReport = new DailyReport() { AppUserId = request.AppUserId };
 
             await _reportRepository.AddReportAsync(report);
 

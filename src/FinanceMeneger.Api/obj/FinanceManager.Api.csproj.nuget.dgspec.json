@@ -339,9 +339,6 @@
             "projectReferences": {
               "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Application\\FinanceManager.Application.csproj": {
                 "projectPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Application\\FinanceManager.Application.csproj"
-              },
-              "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Infastructure\\FinanceManager.Infastructure.csproj": {
-                "projectPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Infastructure\\FinanceManager.Infastructure.csproj"
               }
             }
           }
@@ -371,9 +368,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -405,6 +399,9 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
+              "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Infastructure\\FinanceManager.Infastructure.csproj": {
+                "projectPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Infastructure\\FinanceManager.Infastructure.csproj"
+              },
               "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Persistence\\FinanceManager.Persistence.csproj": {
                 "projectPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Persistence\\FinanceManager.Persistence.csproj"
               },

@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinanceManager.Application\FinanceManager.Application.csproj" />
-    <ProjectReference Include="..\FinanceManager.Infastructure\FinanceManager.Infastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -16,7 +16,6 @@ namespace FinanceManager.Application.Common.Interfaces
         Task<Result> AddToRoleAsync(string email, string roleName);
         Task<bool> CheckIsEmailBusy(string email);
         Task<Result> PasswordSignInAsync(string email, string password, bool isParsistent);
-        Task<ClaimsPrincipal> GetPrincipal(string userEmail, string password);
         Task SignOutAsync();
     }
 }

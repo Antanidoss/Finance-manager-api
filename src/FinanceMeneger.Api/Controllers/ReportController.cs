@@ -29,7 +29,7 @@ namespace FinanceManager.Api.Controllers
             return await _reportService.GetReportByIdAsync(reportId);
         }
 
-        [HttpDelete("remove/{id}")]
+        [HttpDelete("remove/{reportId}")]
         public async Task<Result> RemoveReport(int reportId)
         {
             return await _reportService.RemoveReportAsync(reportId);

@@ -67,25 +67,7 @@ namespace FinanceManager.Infastructure.Identity
         public async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
-        }
-
-        public async Task<ClaimsPrincipal> GetPrincipal(string userEmail, string password)
-        {
-            var user = await _userManager.FindByEmailAsync(userEmail);
-
-            if (user != null)
-            {
-                var check = await _userManager.CheckPasswordAsync(user, password);
-                if (check)
-                {
-                    await _signInManager.SignInAsync(user, true);
-                    var principal = await _signInManager.CreateUserPrincipalAsync(user);
-                    return principal;
-                }
-            }            
-
-            return null;           
-        }
+        }       
 
         public async Task<Result> PasswordSignInAsync(string email, string password, bool isParsistent)
         {

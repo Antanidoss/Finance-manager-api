@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "FinanceManager.Api/1.0.0": {
         "dependencies": {
+          "FinanceManager.Infastructure": "1.0.0",
           "FinanceManager.Persistence": "1.0.0",
           "FinanceManager.Services": "1.0.0",
           "Microsoft.AspNet.WebApi.Core": "5.2.7",
@@ -2167,7 +2168,6 @@
       "FinanceManager.Services/1.0.0": {
         "dependencies": {
           "FinanceManager.Application": "1.0.0",
-          "FinanceManager.Infastructure": "1.0.0",
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0"
         },
         "runtime": {
