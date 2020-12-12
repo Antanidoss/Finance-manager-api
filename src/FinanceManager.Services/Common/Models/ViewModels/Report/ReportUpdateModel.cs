@@ -9,7 +9,7 @@ namespace FinanceManager.Services.Common.Models.ViewModels.Report
     public class ReportUpdateModel
     {
         [JsonProperty("amountSpent")]
-        public decimal AmountSpent { get; set; }
+        public string AmountSpent { get; set; }
 
         [JsonProperty("descriptionsOfExpenses")]
         public string DescriptionsOfExpenses { get; set; }

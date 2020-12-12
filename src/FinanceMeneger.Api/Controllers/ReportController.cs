@@ -18,7 +18,7 @@ namespace FinanceManager.Api.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<Result> AddReport([FromQuery]ReportCreateModel model)
+        public async Task<Result> AddReport([FromBody]ReportCreateModel model)
         {
             return await _reportService.AddReportAsync(model);
         }
@@ -36,7 +36,7 @@ namespace FinanceManager.Api.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<Result> UpdateReport([FromQuery]ReportUpdateModel model)
+        public async Task<Result> UpdateReport([FromBody]ReportUpdateModel model)
         {
             return await _reportService.UpdatereportAsync(model);
         }

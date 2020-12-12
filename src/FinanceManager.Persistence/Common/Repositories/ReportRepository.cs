@@ -60,7 +60,12 @@ namespace FinanceManager.Persistence.Common.Repositories
 
         public async Task UpdateReportAsync(Report report)
         {
-            _context.Reports.Update(report);
+            var updateReport = await _context.Reports.FirstOrDefaultAsync(r => r.Id == report.Id);
+
+            updateReport.AmountSpent = report.AmountSpent;
+            updateReport.DescriptionsOfExpenses = report.DescriptionsOfExpenses;
+
+            _context.Reports.Update(updateReport);
             await _context.SaveChangesAsync();
         }
     }

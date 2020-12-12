@@ -33,7 +33,8 @@ namespace FinanceManager.Application.Reports.Commands.UpdateReport
                 return Result.Failure(new string[] { "Неверный id отчета" });
             }
 
-            await _reportRepository.UpdateReportAsync(new Report(request.AmountSpent, request.DescriptionsOfExpenses));
+            var updateReport = new Report(request.AmountSpent, request.DescriptionsOfExpenses) { Id = request.ReportId };
+            await _reportRepository.UpdateReportAsync(updateReport);
 
             return Result.Success();
         }

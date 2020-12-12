@@ -63,7 +63,7 @@ namespace FinanceManager.Services.Implementation
         {
             string appUserId = _userService.GetCurrentUserId();
 
-            return await _mediator.Send(new UpdateReportCommand(model.AmountSpent, model.DescriptionsOfExpenses, model.ReportId, appUserId));
+            return await _mediator.Send(new UpdateReportCommand(decimal.Parse(model.AmountSpent), model.DescriptionsOfExpenses, model.ReportId, appUserId));
         }
     }
 }
