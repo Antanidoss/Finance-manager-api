@@ -12,7 +12,7 @@ namespace FinanceManager.Services.Common.Models.ViewModels.Report
         [JsonProperty("amountSpent")]
         [Required(ErrorMessage = "Введите сумму траты")]
         [Range(1, int.MaxValue)]
-        public decimal AmountSpent { get; set; }
+        public string AmountSpent { get; set; }
 
         [JsonProperty("descriptionsOfExpenses")]
         [Required(ErrorMessage = "Введите описания траты")]

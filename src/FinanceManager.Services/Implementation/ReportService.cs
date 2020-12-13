@@ -32,7 +32,7 @@ namespace FinanceManager.Services.Implementation
         {
             string appUserId = _userService.GetCurrentUserId();
 
-            return await _mediator.Send(new AddReportCommand(model.AmountSpent, model.DescriptionsOfExpenses, appUserId));
+            return await _mediator.Send(new AddReportCommand(decimal.Parse(model.AmountSpent), model.DescriptionsOfExpenses, appUserId));
         }
 
         public async Task<ReportViewModel> GetReportByIdAsync(int reportId)
