@@ -15,7 +15,6 @@ namespace FinanceManager.Domain.Entities
 
         public Report()
         {
-            TimeOfCreate = DateTime.Now;
             DailyReport = new DailyReport();
         }
 

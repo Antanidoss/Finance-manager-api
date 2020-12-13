@@ -28,7 +28,7 @@ namespace FinanceManager.Application.Reports.Commands.AddReport
         
             report.DailyReport = lastDailyReport != null && lastDailyReport.TimeOfCreate.CompareTo(DateTime.Today) == 0
                 ? lastDailyReport
-                : report.DailyReport = new DailyReport() { AppUserId = request.AppUserId };
+                : report.DailyReport = new DailyReport(request.AppUserId);
 
             await _reportRepository.AddReportAsync(report);
 

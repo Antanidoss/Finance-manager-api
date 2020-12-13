@@ -13,8 +13,13 @@ namespace FinanceManager.Domain.Entities
         public string AppUserId { get; set; }
         public DailyReport()
         {
-            TimeOfCreate = DateTime.Today;
             Reports = new List<Report>();
+        }
+        public DailyReport(string appUserId, ICollection<Report> reports = null)
+        {
+            TimeOfCreate = DateTime.Today;
+            AppUserId = appUserId;
+            Reports = reports != null ? reports : new List<Report>();
         }
     }
 }
