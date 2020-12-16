@@ -8,18 +8,17 @@ namespace FinanceManager.Domain.Entities
     {
         public int Id { get; set; }
         public ICollection<Report> Reports { get; set; }
-        public DateTime TimeOfCreate { get; }
+        public DateTime TimeOfCreate { get; set; }
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
         public DailyReport()
         {
             Reports = new List<Report>();
         }
-        public DailyReport(string appUserId, ICollection<Report> reports = null)
+        public DailyReport(string appUserId)
         {
-            TimeOfCreate = DateTime.Today;
             AppUserId = appUserId;
-            Reports = reports != null ? reports : new List<Report>();
+            TimeOfCreate = DateTime.Today;
         }
     }
 }

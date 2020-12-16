@@ -11,7 +11,7 @@ namespace FinanceManager.Domain.Entities
         public string DescriptionsOfExpenses { get; set; }
         public DailyReport DailyReport { get; set; }
         public int DailyReportId { get; set; }
-        public DateTime TimeOfCreate { get; }
+        public DateTime TimeOfCreate { get; set; }
 
         public Report()
         {
@@ -22,7 +22,7 @@ namespace FinanceManager.Domain.Entities
         {
             AmountSpent = amountSpent;
             DescriptionsOfExpenses = descriptionsOfExpenses;
-            TimeOfCreate = DateTime.Now;
+            TimeOfCreate = DateTime.Today;
             DailyReport = new DailyReport();
         }
     }
