@@ -16,6 +16,6 @@ namespace FinanceManager.Services.Common.Models.ViewModels.AppUser
         public string Password { get; set; }
 
         [JsonProperty("isParsistent")]
-        public string IsParsistent { get; set; }
+        public bool IsParsistent { get; set; }
     }
 }

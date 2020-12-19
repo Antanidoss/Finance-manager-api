@@ -39,7 +39,7 @@ namespace FinanceManager.Services.Implementation
 
         public async Task<Result> AuthenticationAsync(AuthenticationModel model)
         {
-            return await _mediator.Send(new AuthenticationCommand(model.Email, model.Password, bool.Parse(model.IsParsistent)));         
+            return await _mediator.Send(new AuthenticationCommand(model.Email, model.Password, model.IsParsistent));         
         }
 
         public async Task<bool> CheckIsEmailBusy(string email)
