@@ -42,12 +42,12 @@ namespace FinanceManager.Services.Implementation
             return _mapper.Map<ReportViewModel>(await _mediator.Send(new GetReportByIdQuery(reportId, appUserId)));          
         }
 
-        public async Task<GetReportsResponceModel> GetReportsAsync(int skip, int take, int dailyId)
+        public async Task<GetReportsResponceModel> GetReportsAsync(int skip, int take, int dailyReportId)
         {
             string appUserId = _userService.GetCurrentUserId();
 
-            var reports = await _mediator.Send(new GetReportsQuery(skip, take, appUserId));
-            int reportsCount = await _mediator.Send(new GetReportCountQuery(dailyId));
+            var reports = await _mediator.Send(new GetReportsQuery(skip, take, appUserId, dailyReportId));
+            int reportsCount = await _mediator.Send(new GetReportCountQuery(dailyReportId));
 
             return new GetReportsResponceModel(_mapper.Map<IEnumerable<ReportViewModel>>(reports), reportsCount);
         }      

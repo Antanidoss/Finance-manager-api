@@ -28,7 +28,10 @@ namespace FinanceManager.Application.Reports.Queries.GetReports
                 throw new ArgumentException("Invalid input parameters (skip), (take)");
             }
 
-            var reports = await _reportRepository.GetReportsAsync(request.Skip, request.Take);
+            var reports = await _reportRepository.GetReportsAsync(request.Skip, request.Take, (r) => 
+            { 
+                return r.DailyReportId == request.DailyReportId && r.DailyReport.AppUserId == request.AppUserId; 
+            });
 
             return _mapper.Map<IEnumerable<ReportDTO>>(reports);
         }

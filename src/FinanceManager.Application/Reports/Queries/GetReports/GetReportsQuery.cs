@@ -10,12 +10,14 @@ namespace FinanceManager.Application.Reports.Queries.GetReports
     {
         public int Skip { get; }
         public int Take { get; }
-        public string AppUserId { get; set; }
-        public GetReportsQuery(int skip, int take, string appUserId)
+        public string AppUserId { get; }
+        public int DailyReportId { get; }
+        public GetReportsQuery(int skip, int take, string appUserId, int dailyReportId)
         {
             Skip = skip;
             Take = take;
             AppUserId = appUserId;
+            DailyReportId = dailyReportId;
         }
     }
 }

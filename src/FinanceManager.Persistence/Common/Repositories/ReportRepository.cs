@@ -46,6 +46,7 @@ namespace FinanceManager.Persistence.Common.Repositories
         public async Task<IEnumerable<Report>> GetReportsAsync(int skip, int take, Func<Report, bool> func)
         {
             return _context.Reports
+                .Include(r => r.DailyReport)
                 .Where(func)
                 .Skip(skip)
                 .Take(take)

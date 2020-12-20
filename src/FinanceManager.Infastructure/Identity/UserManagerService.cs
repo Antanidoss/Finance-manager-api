@@ -74,13 +74,13 @@ namespace FinanceManager.Infastructure.Identity
             var user = await _userManager.FindByEmailAsync(email);
             if(user == null)
             {
-                
+                return Result.Failure(new string[] { "Эл.почта не найдена" });
             }
 
             var check = await _userManager.CheckPasswordAsync(user, password);
             if (!check)
             {
-
+                return Result.Failure(new string[] { "Неверная эл.почта или пароль" });
             }
 
             await _signInManager.PasswordSignInAsync(user, password, isParsistent, false);
