@@ -11,13 +11,6 @@ namespace FinanceManager.Persistence.Common.Context
         public EFDbContext(DbContextOptions<EFDbContext> options) : base(options) { }
 
         public DbSet<Report> Reports { get; set; }
-        public DbSet<DailyReport> DailyReports { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Report>().ToTable("Reports");
-            modelBuilder.Entity<DailyReport>().ToTable("DailyReports");
-        }
+        public DbSet<DailyReport> DailyReports { get; set; }        
     }
 }

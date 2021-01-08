@@ -1014,11 +1014,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Services\\FinanceManager.Services.csproj",
+      "projectUniqueName": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Services\\FinanceManager.Services.csproj",
       "projectName": "FinanceManager.Services",
-      "projectPath": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Services\\FinanceManager.Services.csproj",
+      "projectPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Services\\FinanceManager.Services.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Services\\obj\\",
+      "outputPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1034,8 +1034,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Application\\FinanceManager.Application.csproj": {
-              "projectPath": "C:\\IT\\c#\\Проекты\\FinanceManager\\src\\FinanceManager.Application\\FinanceManager.Application.csproj"
+            "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Application\\FinanceManager.Application.csproj": {
+              "projectPath": "C:\\IT\\c#\\Новая папка\\src\\FinanceManager.Application\\FinanceManager.Application.csproj"
             }
           }
         }
