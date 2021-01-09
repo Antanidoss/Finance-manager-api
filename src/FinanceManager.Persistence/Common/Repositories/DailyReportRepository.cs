@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Persistence.Common.Repositories
@@ -37,17 +36,19 @@ namespace FinanceManager.Persistence.Common.Repositories
                 .CountAsync();
         }
 
-        public async Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take)
+        public async Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, string appUserId)
         {
             return await _context.DailyReports
+                .Where(d => d.AppUserId == appUserId)
                 .Skip(skip)
                 .Take(take)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, Func<DailyReport, bool> func)
+        public async Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, string appUserId, Func<DailyReport, bool> func)
         {
             return _context.DailyReports
+                .Where(d => d.AppUserId == appUserId)
                 .Where(func)
                 .Skip(skip)
                 .Take(take)

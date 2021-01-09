@@ -23,12 +23,16 @@ namespace FinanceManager.Application.Reports.Commands.AddReport
         public async Task<Result> Handle(AddReportCommand request, CancellationToken cancellationToken)
         {
             var report = new Report(request.AmountSpent, request.DescriptionsOfExpenses);
-
-            var lastDailyReport = await _dailyReportRepository.GetLastDailyReportAsync(request.AppUserId);
-        
-            report.DailyReport = lastDailyReport != null && lastDailyReport.TimeOfCreate.CompareTo(DateTime.Today) == 0
-                ? lastDailyReport
-                : report.DailyReport = new DailyReport(request.AppUserId);
+            var lastDailyReport = await _dailyReportRepository.GetLastDailyReportAsync(request.AppUserId);            
+           
+            if (lastDailyReport != null && lastDailyReport.TimeOfCreate.CompareTo(DateTime.Today) == 0)
+            {
+                report.DailyReportId = lastDailyReport.Id;
+            }
+            else
+            {
+                report.DailyReport = new DailyReport(request.AppUserId);
+            }
 
             await _reportRepository.AddReportAsync(report);
 

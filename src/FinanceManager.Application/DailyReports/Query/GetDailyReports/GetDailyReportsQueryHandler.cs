@@ -2,9 +2,7 @@
 using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Interfaces;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +21,9 @@ namespace FinanceManager.Application.DailyReports.Query.GetDailyReports
 
         public async Task<IEnumerable<DailyReportDTO>> Handle(GetDailyReportsQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<IEnumerable<DailyReportDTO>>(await _dailyReportRepository.GetDailyReportsAsync(request.Skip, request.Take));
+            var reports = await _dailyReportRepository.GetDailyReportsAsync(request.Skip, request.Take, request.AppUserId);      
+
+            return _mapper.Map<IEnumerable<DailyReportDTO>>(reports);
         }
     }
 }

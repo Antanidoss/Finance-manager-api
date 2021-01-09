@@ -32,25 +32,27 @@ namespace FinanceManager.Persistence.Common.Repositories
 
         public async Task<int> GetReportCount(int dailyReportId)
         {
-            return await _context.Reports.Where(p => p.DailyReportId == dailyReportId).CountAsync();
+            return await _context.Reports
+                .Where(p => p.DailyReportId == dailyReportId)
+                .CountAsync();
         }
 
-        public async Task<IEnumerable<Report>> GetReportsAsync(int skip, int take)
+        public async Task<IEnumerable<Report>> GetReportsAsync(int skip, int take, int dailyReportId)
         {
             return await _context.Reports
+                .Where(r => r.DailyReportId == dailyReportId)
                 .Skip(skip)
                 .Take(take)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Report>> GetReportsAsync(int skip, int take, Func<Report, bool> func)
+        public async Task<IEnumerable<Report>> GetReportsAsync(int skip, int take, int dailyReportId, Func<Report, bool> func)
         {
-            return _context.Reports
-                .Include(r => r.DailyReport)
+            return  _context.Reports
+                .Where(r => r.DailyReportId == dailyReportId)
                 .Where(func)
                 .Skip(skip)
-                .Take(take)
-                .ToList();
+                .Take(take);
         }
 
         public async Task RemoveReportAsync(Report report)

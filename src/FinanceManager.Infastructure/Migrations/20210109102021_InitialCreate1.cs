@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FinanceManager.Infastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreate1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -153,7 +153,7 @@ namespace FinanceManager.Infastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DailyReport",
+                name: "DailyReports",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -163,9 +163,9 @@ namespace FinanceManager.Infastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DailyReport", x => x.Id);
+                    table.PrimaryKey("PK_DailyReports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DailyReport_AspNetUsers_AppUserId",
+                        name: "FK_DailyReports_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -173,7 +173,7 @@ namespace FinanceManager.Infastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Report",
+                name: "Reports",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -185,11 +185,11 @@ namespace FinanceManager.Infastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Report", x => x.Id);
+                    table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Report_DailyReport_DailyReportId",
+                        name: "FK_Reports_DailyReports_DailyReportId",
                         column: x => x.DailyReportId,
-                        principalTable: "DailyReport",
+                        principalTable: "DailyReports",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -234,13 +234,13 @@ namespace FinanceManager.Infastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DailyReport_AppUserId",
-                table: "DailyReport",
+                name: "IX_DailyReports_AppUserId",
+                table: "DailyReports",
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Report_DailyReportId",
-                table: "Report",
+                name: "IX_Reports_DailyReportId",
+                table: "Reports",
                 column: "DailyReportId");
         }
 
@@ -262,13 +262,13 @@ namespace FinanceManager.Infastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Report");
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "DailyReport");
+                name: "DailyReports");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

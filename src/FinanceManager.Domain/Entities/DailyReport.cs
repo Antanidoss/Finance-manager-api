@@ -7,7 +7,7 @@ namespace FinanceManager.Domain.Entities
     public class DailyReport
     {
         public int Id { get; set; }
-        public ICollection<Report> Reports { get; set; }
+        public IEnumerable<Report> Reports { get; set; }
         public DateTime TimeOfCreate { get; set; }
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
@@ -19,6 +19,7 @@ namespace FinanceManager.Domain.Entities
         {
             AppUserId = appUserId;
             TimeOfCreate = DateTime.Today;
+            Reports = new List<Report>();
         }
     }
 }

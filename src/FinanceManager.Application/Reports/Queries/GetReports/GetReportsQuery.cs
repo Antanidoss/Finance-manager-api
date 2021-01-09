@@ -8,10 +8,14 @@ namespace FinanceManager.Application.Reports.Queries.GetReports
 {
     public class GetReportsQuery : IRequest<IEnumerable<ReportDTO>>
     {
-        public int Skip { get; }
-        public int Take { get; }
-        public string AppUserId { get; }
-        public int DailyReportId { get; }
+        public readonly int Skip;
+
+        public readonly int Take;
+
+        public readonly string AppUserId;
+
+        public readonly int DailyReportId;
+
         public GetReportsQuery(int skip, int take, string appUserId, int dailyReportId)
         {
             Skip = skip;

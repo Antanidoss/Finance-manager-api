@@ -9,8 +9,8 @@ namespace FinanceManager.Application.Common.Interfaces
     public interface IDailyReportRepository
     {
         Task<DailyReport> GetDailyReportByIdAsync(int dailyReportId);
-        Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take);
-        Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, Func<DailyReport, bool> func);
+        Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, string appUserId);
+        Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, string appUserId, Func<DailyReport, bool> func);
         Task<DailyReport> GetLastDailyReportAsync(string appUserId);
         Task<int> GetDailyReportCount(string appUserId);
     }

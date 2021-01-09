@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceManager.Infastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210108082512_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210109102021_InitialCreate1")]
+    partial class InitialCreate1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,7 +103,7 @@ namespace FinanceManager.Infastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("DailyReport");
+                    b.ToTable("DailyReports");
                 });
 
             modelBuilder.Entity("FinanceManager.Domain.Entities.Report", b =>
@@ -129,7 +129,7 @@ namespace FinanceManager.Infastructure.Migrations
 
                     b.HasIndex("DailyReportId");
 
-                    b.ToTable("Report");
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

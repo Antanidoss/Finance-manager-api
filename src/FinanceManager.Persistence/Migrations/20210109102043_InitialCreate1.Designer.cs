@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceManager.Persistence.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20210108081755_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210109102043_InitialCreate1")]
+    partial class InitialCreate1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

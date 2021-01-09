@@ -2,9 +2,7 @@
 using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Interfaces;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,15 +20,10 @@ namespace FinanceManager.Application.Reports.Queries.GetReports
         }
 
         public async Task<IEnumerable<ReportDTO>> Handle(GetReportsQuery request, CancellationToken cancellationToken)
-        {
-            if(request.Skip < 0 && request.Take <= 0)
-            {
-                throw new ArgumentException("Invalid input parameters (skip), (take)");
-            }
-
-            var reports = await _reportRepository.GetReportsAsync(request.Skip, request.Take, (r) => 
+        {           
+            var reports = await _reportRepository.GetReportsAsync(request.Skip, request.Take, request.DailyReportId, (r) => 
             { 
-                return r.DailyReportId == request.DailyReportId && r.DailyReport.AppUserId == request.AppUserId; 
+                return r.DailyReport.AppUserId == request.AppUserId; 
             });
 
             return _mapper.Map<IEnumerable<ReportDTO>>(reports);

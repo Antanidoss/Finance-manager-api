@@ -101,7 +101,7 @@ namespace FinanceManager.Infastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("DailyReport");
+                    b.ToTable("DailyReports");
                 });
 
             modelBuilder.Entity("FinanceManager.Domain.Entities.Report", b =>
@@ -127,7 +127,7 @@ namespace FinanceManager.Infastructure.Migrations
 
                     b.HasIndex("DailyReportId");
 
-                    b.ToTable("Report");
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

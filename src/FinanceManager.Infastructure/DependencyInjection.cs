@@ -2,11 +2,8 @@
 using FinanceManager.Application.Common.Models;
 using FinanceManager.Domain.Entities;
 using FinanceManager.Infastructure.Identity;
-using FinanceManager.Infastructure.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
