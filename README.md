@@ -1,5 +1,5 @@
 ## *Finance manager project*
-# This project is an API for the project Finance-manager-client (https://github.com/Antanidoss/Finance-manager-client).
+### This project is an API for the project Finance-manager-client (https://github.com/Antanidoss/Finance-manager-client).
 ---
 # Technologies: 
 - NET Core 3
