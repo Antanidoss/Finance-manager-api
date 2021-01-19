@@ -1,4 +1,5 @@
 ﻿using FinanceManager.Application.Common.Models;
+using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.AppUser;
 using FinanceManeger.Web.Models.CreateModel;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace FinanceManager.Services.Common.Interfaces
         Task<Result> AuthenticationAsync(AuthenticationModel model);
         Task<bool> CheckIsEmailBusy(string email);
         Task<Result> AddToRoleAsync(string email, string roleName);
-        Task<AuthenticationResponceModel> GetCurrentUser();
+        Task<Response<AuthenticationResponseModel>> GetCurrentUser();
         Task Logout();
     }
 }

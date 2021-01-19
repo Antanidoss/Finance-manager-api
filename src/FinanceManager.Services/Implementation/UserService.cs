@@ -8,6 +8,7 @@ using FinanceManager.Application.User.Commands.Logout;
 using FinanceManager.Application.User.Commands.Registration;
 using FinanceManager.Application.User.Queries.GetUserByEmail;
 using FinanceManager.Services.Common.Interfaces;
+using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.AppUser;
 using FinanceManeger.Web.Models.CreateModel;
 using MediatR;
@@ -47,11 +48,12 @@ namespace FinanceManager.Services.Implementation
             return await _mediator.Send(new CheckIsEmailBusyQuery(email));
         }
 
-        public async Task<AuthenticationResponceModel> GetCurrentUser()
+        public async Task<Response<AuthenticationResponseModel>> GetCurrentUser()
         {
             var user = _mapper.Map<AppUserViewModel>(await _mediator.Send(new GetUserByIdQuery(GetCurrentUserId())));
+            var authenticationModel = new AuthenticationResponseModel(user, user != null ? true : false);
 
-            return new AuthenticationResponceModel(user, user != null ? true : false);
+            return new Response<AuthenticationResponseModel>(authenticationModel, Result.Success());
         }
 
         public string GetCurrentUserId()

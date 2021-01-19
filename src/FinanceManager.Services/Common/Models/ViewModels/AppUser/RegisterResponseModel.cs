@@ -5,14 +5,14 @@ using System.Text;
 
 namespace FinanceManager.Services.Common.Models.ViewModels.AppUser
 {
-    public class RegisterResponceModel
+    public class RegisterResponseModel
     {
         public string Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public Result Result { get; set; }
 
-        public RegisterResponceModel(string id, string name, string email, Result result)
+        public RegisterResponseModel(string id, string name, string email, Result result)
         {
             Id = id;
             Name = name;
@@ -20,7 +20,7 @@ namespace FinanceManager.Services.Common.Models.ViewModels.AppUser
             Result = result;
         }
 
-        public RegisterResponceModel(Result result)
+        public RegisterResponseModel(Result result)
         {
             Result = result;
         }

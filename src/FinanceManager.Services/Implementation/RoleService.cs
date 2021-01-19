@@ -3,6 +3,7 @@ using FinanceManager.Application.Common.Models;
 using FinanceManager.Application.Role.Command.CreateRole;
 using FinanceManager.Application.Role.Query.GetRoleByName;
 using FinanceManager.Services.Common.Interfaces;
+using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.Role;
 using MediatR;
 using System.Threading.Tasks;
@@ -13,13 +14,11 @@ namespace FinanceManager.Services.Implementation
     {
         private readonly IMediator _mediator;
 
-        private readonly IUserService _userService;
 
         private readonly IMapper _mapper;
-        public RoleService(IMediator mediator, IUserService userService, IMapper mapper)
+        public RoleService(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
-            _userService = userService;
             _mapper = mapper;
         }
 
@@ -28,9 +27,11 @@ namespace FinanceManager.Services.Implementation
             return await _mediator.Send(new CreateRoleCommand(roleName));
         }
 
-        public async Task<RoleViewModel> GetRoleByNameAsync(string roleName)
+        public async Task<Response<RoleViewModel>> GetRoleByNameAsync(string roleName)
         {
-            return _mapper.Map<RoleViewModel>(await _mediator.Send(new GetRoleByNameQuery(roleName)));
+            var role = await _mediator.Send(new GetRoleByNameQuery(roleName));
+
+            return new Response<RoleViewModel>(_mapper.Map<RoleViewModel>(role), Result.Success());
         }
     }
 }

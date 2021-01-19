@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace FinanceManager.Services.Common.Models.ViewModels.Report
 {
-    public class GetReportsResponceModel
+    public class GetReportsResponseModel
     {
         public IEnumerable<ReportViewModel> Reports { get; }
         public int TotalReportCount { get; }
 
-        public GetReportsResponceModel(IEnumerable<ReportViewModel> reports, int totalReportCount)
+        public GetReportsResponseModel(IEnumerable<ReportViewModel> reports, int totalReportCount)
         {
             Reports = reports;
             TotalReportCount = totalReportCount;

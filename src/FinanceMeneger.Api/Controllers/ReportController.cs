@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using FinanceManager.Application.Common.Models;
 using FinanceManager.Services.Common.Interfaces;
+using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.Report;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,7 @@ namespace FinanceManager.Api.Controllers
         }
 
         [HttpGet("get/{reportId}")]
-        public async Task<ReportViewModel> GetReportById(int reportId)
+        public async Task<Response<ReportViewModel>> GetReportById(int reportId)
         {
             return await _reportService.GetReportByIdAsync(reportId);
         }
@@ -42,7 +43,7 @@ namespace FinanceManager.Api.Controllers
         }
 
         [HttpGet("get/{skip}&{take}&{dailyReportId}")]
-        public async Task<GetReportsResponceModel> GetReports(int skip, int take, int dailyReportId)
+        public async Task<Response<GetReportsResponseModel>> GetReports(int skip, int take, int dailyReportId)
         {
             return await _reportService.GetReportsAsync(skip, take, dailyReportId);
         }

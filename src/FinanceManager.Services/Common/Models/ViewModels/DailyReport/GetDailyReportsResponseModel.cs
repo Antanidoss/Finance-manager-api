@@ -5,11 +5,11 @@ using System.Text;
 
 namespace FinanceManager.Services.Common.Models.ViewModels.DailyReport
 {
-    public class GetDailyReportsResponceModel
+    public class GetDailyReportsResponseModel
     {
         public IEnumerable<DailyReportViewModel> DailyReports { get; }
         public int TotalDailyReportCount { get; }
-        public GetDailyReportsResponceModel(IEnumerable<DailyReportViewModel> dailyReports, int totalDailyReportCount)
+        public GetDailyReportsResponseModel(IEnumerable<DailyReportViewModel> dailyReports, int totalDailyReportCount)
         {
             DailyReports = dailyReports;
             TotalDailyReportCount = totalDailyReportCount;

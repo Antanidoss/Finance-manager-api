@@ -1,5 +1,6 @@
 ﻿using FinanceManager.Application.Common.Models;
 using FinanceManager.Services.Common.Interfaces;
+using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.AppUser;
 using FinanceManeger.Web.Models.CreateModel;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace FinanceManager.Api.Controllers
         }
 
         [HttpGet("auth/me")]
-        public async Task<AuthenticationResponceModel> Authentication()
+        public async Task<Response<AuthenticationResponseModel>> Authentication()
         {
             return await _userService.GetCurrentUser();
         }
