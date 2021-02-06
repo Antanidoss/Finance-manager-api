@@ -27,7 +27,6 @@ namespace FinanceManager.Infastructure.Identity
         public async Task<Result> AddToRoleAsync(string email, string roleName)
         {
             var appUser = await _userManager.FindByEmailAsync(email);
-
             var result = await _userManager.AddToRoleAsync(appUser, roleName);
 
             return result.ToApplicationResult();

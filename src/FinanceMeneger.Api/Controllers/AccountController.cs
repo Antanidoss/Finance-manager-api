@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace FinanceManager.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class AccountController : ControllerBase
+    public class AccountController : ApiController
     {
         private readonly IUserService _userService;
 
