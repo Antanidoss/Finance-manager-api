@@ -8,15 +8,15 @@ namespace FinanceManager.Api.Helpers
     {
         public static async Task InitializeAsync(IUserService userService, IRoleService roleService)
         {
-            if(await roleService.GetRoleByNameAsync("user") == null)
+            if (await roleService.GetRoleByNameAsync("user") == null)
             {
                 await roleService.CreateRoleAsync("user");
             }
-            if(await roleService.GetRoleByNameAsync("admin") == null)
+            if (await roleService.GetRoleByNameAsync("admin") == null)
             {
                 await roleService.CreateRoleAsync("admin");
             }
-            if(!await userService.CheckIsEmailBusy("adminFinanceManager@gmail.com"))
+            if (!await userService.CheckIsEmailBusy("adminFinanceManager@gmail.com"))
             {
                 string name = "AdminName";
                 string email = "adminFinanceManager@gmail.com";

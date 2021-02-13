@@ -50,7 +50,6 @@ namespace FinanceManager.Persistence.Common.Repositories
         {
             return  _context.Reports
                 .Where(r => r.DailyReportId == dailyReportId)
-                .Include(r => r.DailyReport)
                 .Where(func)
                 .Skip(skip)
                 .Take(take)

@@ -21,10 +21,7 @@ namespace FinanceManager.Application.Reports.Queries.GetReports
 
         public async Task<IEnumerable<ReportDTO>> Handle(GetReportsQuery request, CancellationToken cancellationToken)
         {           
-            var reports = await _reportRepository.GetReportsAsync(request.Skip, request.Take, request.DailyReportId, (r) => 
-            { 
-                return r.DailyReport.AppUserId == request.AppUserId; 
-            });
+            var reports = await _reportRepository.GetReportsAsync(request.Skip, request.Take, request.DailyReportId);
 
             return _mapper.Map<IEnumerable<ReportDTO>>(reports);
         }

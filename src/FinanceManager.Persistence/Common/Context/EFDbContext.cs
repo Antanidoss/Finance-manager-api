@@ -1,19 +1,22 @@
 ﻿using FinanceManager.Domain.Entities;
+using FinanceManager.Persistence.Common.Context.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceManager.Persistence.Common.Context
 {
-    public class EFDbContext : DbContext
+    public class EFDbContext : IdentityDbContext<AppUser>
     {
-        public EFDbContext(DbContextOptions<EFDbContext> options) : base(options) { Database.EnsureCreated(); }
+        public EFDbContext(DbContextOptions<EFDbContext> options) : base(options) {/* Database.EnsureDeleted(); Database.EnsureCreated();*/ }
 
         public DbSet<Report> Reports { get; set; }
         public DbSet<DailyReport> DailyReports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {           
-            modelBuilder.Entity<Report>().ToTable("Reports");
-            modelBuilder.Entity<DailyReport>().ToTable("DailyReports");
+            modelBuilder.ApplyConfiguration(new ReportModelConfiguration());
+            modelBuilder.ApplyConfiguration(new DailyReportModelConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace FinanceManager.Api.Controllers
 {
-    [Route("api/[controller]")]
     [System.Web.Http.Authorize]
+    [Route("api/[controller]")]    
     public class DailyReportController : ApiController
     {
         private readonly IDailyReportService _dailyReportService;
