@@ -24,11 +24,11 @@ namespace FinanceManager.Application.Reports.Commands.UpdateReport
         {
             var report = await _reportRepository.GetReportByIdAsync(request.ReportId);
 
-            if(report == null)
+            if (report == null)
             {
                 throw new NotFoundException(nameof(report), request.ReportId);
             }
-            if(report.DailyReport.AppUserId != request.AppUserId)
+            if (report.DailyReport.AppUserId != request.AppUserId)
             {
                 return Result.Failure(new string[] { "Неверный id отчета" });
             }

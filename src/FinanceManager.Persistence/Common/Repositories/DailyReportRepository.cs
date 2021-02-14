@@ -26,7 +26,9 @@ namespace FinanceManager.Persistence.Common.Repositories
 
         public async Task<DailyReport> GetDailyReportByIdAsync(int dailyReportId)
         {
-            return await _context.DailyReports.FirstOrDefaultAsync(d => d.Id == dailyReportId);
+            return await _context.DailyReports
+                .Include(d => d.Reports)
+                .FirstOrDefaultAsync(d => d.Id == dailyReportId);
         }
 
         public async Task<int> GetDailyReportCount(string appUserId)
@@ -42,23 +44,27 @@ namespace FinanceManager.Persistence.Common.Repositories
                 .Where(d => d.AppUserId == appUserId)
                 .Skip(skip)
                 .Take(take)
+                .Include(d => d.Reports)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, string appUserId, Func<DailyReport, bool> func)
         {
-            return _context.DailyReports
+            return await _context.DailyReports
                 .Where(d => d.AppUserId == appUserId)
                 .Where(func)
                 .Skip(skip)
                 .Take(take)
-                .ToList();
+                .AsQueryable()
+                .Include(d => d.Reports)
+                .ToListAsync();
         }
 
         public async Task<DailyReport> GetLastDailyReportAsync(string appUserId)
         {
             var dailyReports = await _context.DailyReports
                 .Where(d => d.AppUserId == appUserId)
+                .Include(d => d.Reports)
                 .ToListAsync();
 
             return dailyReports.Count() != 0 

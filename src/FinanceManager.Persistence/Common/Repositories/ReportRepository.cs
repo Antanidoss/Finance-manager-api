@@ -27,7 +27,10 @@ namespace FinanceManager.Persistence.Common.Repositories
 
         public async Task<Report> GetReportByIdAsync(int reportId)
         {
-            return await _context.Reports.Include(p => p.DailyReport).FirstOrDefaultAsync(r => r.Id == reportId);
+            return await _context.Reports
+                .Include(p => p.DailyReport)
+                .ThenInclude(p => p.AppUser)
+                .FirstOrDefaultAsync(r => r.Id == reportId);
         }
 
         public async Task<int> GetReportCount(int dailyReportId)

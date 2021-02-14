@@ -10,10 +10,9 @@ namespace FinanceManager.Domain.Entities
         public DateTime TimeOfCreate { get; set; }
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
-        public DailyReport()
-        {
-            Reports = new List<Report>();
-        }
+
+        public DailyReport() { }
+
         public DailyReport(string appUserId)
         {
             AppUserId = appUserId;
