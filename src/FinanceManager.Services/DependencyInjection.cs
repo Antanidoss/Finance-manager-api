@@ -31,6 +31,7 @@ namespace FinanceManager.Infastructure
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IStatisticsService, StatisticsService>();
 
             return services;
         }

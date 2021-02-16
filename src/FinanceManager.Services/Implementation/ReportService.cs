@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using FinanceManager.Application.Common.Models;
+using FinanceManager.Application.DailyReports.Query.GetDailyReportsCount;
+using FinanceManager.Application.DailyReports.Query.GetDailyReportWithConditions;
 using FinanceManager.Application.Reports.Commands.AddReport;
 using FinanceManager.Application.Reports.Commands.RemoveReport;
 using FinanceManager.Application.Reports.Commands.UpdateReport;
@@ -7,10 +9,12 @@ using FinanceManager.Application.Reports.Queries.GetReportById;
 using FinanceManager.Application.Reports.Queries.GetReportCount;
 using FinanceManager.Application.Reports.Queries.GetReports;
 using FinanceManager.Services.Common.Interfaces;
+using FinanceManager.Services.Common.Models;
 using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.Report;
 using MediatR;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Services.Implementation
@@ -53,7 +57,23 @@ namespace FinanceManager.Services.Implementation
             var getReportsResponseModel = new GetReportsResponseModel(_mapper.Map<IEnumerable<ReportViewModel>>(reports), reportsCount);
 
             return new Response<GetReportsResponseModel>(getReportsResponseModel, Result.Success());
-        }      
+        }
+
+        public async Task<MonthlyStatistics> GetReportsMonthlyStatistics(int year, int monthNumber)
+        {
+            string appUserId = _userService.GetCurrentUserId();
+            var dailyReport = await _mediator.Send(new GetDailyReportWithConditionsQuery(appUserId,
+                (d) => d.TimeOfCreate.Month == monthNumber && d.TimeOfCreate.Year == year));
+
+            if (dailyReport == null)
+            {
+
+            }
+
+            decimal amountSpentPerMonth = dailyReport.Reports.Sum(r => r.AmountSpent);
+
+            return new MonthlyStatistics(year, monthNumber, amountSpentPerMonth, dailyReport.Reports.Count());
+        }
 
         public async Task<Result> RemoveReportAsync(int reportId)
         {

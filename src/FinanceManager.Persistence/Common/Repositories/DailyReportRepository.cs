@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Persistence.Common.Repositories
@@ -22,6 +23,14 @@ namespace FinanceManager.Persistence.Common.Repositories
         {
             _context.DailyReports.Add(dailyReport);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<DailyReport> GetDailyReport(string appUserId, Expression<Func<DailyReport, bool>> conditions)
+        {
+            return await _context.DailyReports
+                .Where(d => d.AppUserId == appUserId)
+                .Include(d => d.Reports)
+                .FirstOrDefaultAsync(conditions);
         }
 
         public async Task<DailyReport> GetDailyReportByIdAsync(int dailyReportId)
@@ -48,16 +57,16 @@ namespace FinanceManager.Persistence.Common.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, string appUserId, Func<DailyReport, bool> func)
+        public async Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, string appUserId, 
+            Func<DailyReport, bool> func)
         {
-            return await _context.DailyReports
+            return  _context.DailyReports
                 .Where(d => d.AppUserId == appUserId)
+                .Include(d => d.Reports)
                 .Where(func)
                 .Skip(skip)
                 .Take(take)
-                .AsQueryable()
-                .Include(d => d.Reports)
-                .ToListAsync();
+                .ToList();
         }
 
         public async Task<DailyReport> GetLastDailyReportAsync(string appUserId)

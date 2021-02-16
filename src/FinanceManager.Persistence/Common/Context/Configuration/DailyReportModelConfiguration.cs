@@ -11,7 +11,7 @@ namespace FinanceManager.Persistence.Common.Context.Configuration
             builder.ToTable("DailyReports");
             builder.HasKey(d => d.Id);
 
-            builder.Property(d => d.AppUserId);
+            builder.Property(d => d.AppUserId).IsRequired();
             builder.Property(d => d.TimeOfCreate).IsRequired();
 
             builder.HasOne(d => d.AppUser)

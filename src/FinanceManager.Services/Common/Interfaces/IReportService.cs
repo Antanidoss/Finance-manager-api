@@ -1,4 +1,5 @@
 ﻿using FinanceManager.Application.Common.Models;
+using FinanceManager.Services.Common.Models;
 using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.Report;
 using System.Threading.Tasks;
@@ -12,5 +13,6 @@ namespace FinanceManager.Services.Common.Interfaces
         Task<Response<GetReportsResponseModel>> GetReportsAsync(int skip, int take, int dailyId);
         Task<Response<ReportViewModel>> GetReportByIdAsync(int reportId);
         Task<Result> UpdatereportAsync(ReportUpdateModel model);
+        Task<MonthlyStatistics> GetReportsMonthlyStatistics(int year, int amountSpentPerMonth);
     }
 }
