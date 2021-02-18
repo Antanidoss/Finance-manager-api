@@ -6,8 +6,9 @@ namespace FinanceManager.Application.Common.DTO
 {
     public class DailyReportDTO
     {
-        public int Id { get; set; }
-        public List<ReportDTO> Reports { get; set; }
+        public string Id { get; set; }
+        public int ReportsCount { get; set; }
         public string TimeOfCreate { get; set; }
+        public IEnumerable<ReportDTO> Reports { get; set; }
     }
 }

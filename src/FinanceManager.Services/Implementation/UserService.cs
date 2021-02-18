@@ -50,7 +50,7 @@ namespace FinanceManager.Services.Implementation
 
         public async Task<Response<AuthenticationResponseModel>> GetCurrentUser()
         {
-            var user = _mapper.Map<AppUserViewModel>(await _mediator.Send(new GetUserByIdQuery(GetCurrentUserId())));
+            var user = await _mediator.Send(new GetUserByIdQuery(GetCurrentUserId()));
             var authenticationModel = new AuthenticationResponseModel(user, user != null ? true : false);
 
             return new Response<AuthenticationResponseModel>(authenticationModel, Result.Success());

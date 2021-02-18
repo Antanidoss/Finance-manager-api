@@ -16,7 +16,7 @@ namespace FinanceManager.Domain.Entities
         public DailyReport(string appUserId)
         {
             AppUserId = appUserId;
-            TimeOfCreate = DateTime.Today;
+            TimeOfCreate = DateTime.Now;
             Reports = new List<Report>();
         }
     }

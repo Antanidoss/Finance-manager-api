@@ -1,4 +1,5 @@
-﻿using FinanceManager.Application.Common.Models;
+﻿using FinanceManager.Application.Common.DTO;
+using FinanceManager.Application.Common.Models;
 using MediatR;
 using Newtonsoft.Json;
 using System;
@@ -9,15 +10,12 @@ namespace FinanceManager.Application.Reports.Commands.AddReport
 {
     public class AddReportCommand : IRequest<Result>
     {
-        public readonly decimal AmountSpent;
-
-        public readonly string DescriptionsOfExpenses;
+        public readonly ReportDTO Report;
 
         public readonly string AppUserId;
-        public AddReportCommand(decimal amountSpent, string descriptionsOfExpenses, string appUserId)
+        public AddReportCommand(ReportDTO report, string appUserId)
         {
-            AmountSpent = amountSpent;
-            DescriptionsOfExpenses = descriptionsOfExpenses;
+            Report = report;
             AppUserId = appUserId;
         }
     }

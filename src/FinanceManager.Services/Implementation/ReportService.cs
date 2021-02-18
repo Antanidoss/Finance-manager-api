@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Models;
 using FinanceManager.Application.DailyReports.Query.GetDailyReportsCount;
 using FinanceManager.Application.DailyReports.Query.GetDailyReportWithConditions;
@@ -37,15 +38,15 @@ namespace FinanceManager.Services.Implementation
         {
             string appUserId = _userService.GetCurrentUserId();
 
-            return await _mediator.Send(new AddReportCommand(decimal.Parse(model.AmountSpent), model.DescriptionsOfExpenses, appUserId));
+            return await _mediator.Send(new AddReportCommand(_mapper.Map<ReportDTO>(model), appUserId));
         }
 
-        public async Task<Response<ReportViewModel>> GetReportByIdAsync(int reportId)
+        public async Task<Response<ReportDTO>> GetReportByIdAsync(int reportId)
         {
             string appUserId = _userService.GetCurrentUserId();
             var report = await _mediator.Send(new GetReportByIdQuery(reportId, appUserId));
 
-            return new Response<ReportViewModel>(_mapper.Map<ReportViewModel>(report), Result.Success());           
+            return new Response<ReportDTO>(report, Result.Success());           
         }
 
         public async Task<Response<GetReportsResponseModel>> GetReportsAsync(int skip, int take, int dailyReportId)
@@ -54,26 +55,10 @@ namespace FinanceManager.Services.Implementation
             var reports = await _mediator.Send(new GetReportsQuery(skip, take, appUserId, dailyReportId));
             int reportsCount = await _mediator.Send(new GetReportCountQuery(dailyReportId));
 
-            var getReportsResponseModel = new GetReportsResponseModel(_mapper.Map<IEnumerable<ReportViewModel>>(reports), reportsCount);
+            var getReportsResponseModel = new GetReportsResponseModel(reports, reportsCount);
 
             return new Response<GetReportsResponseModel>(getReportsResponseModel, Result.Success());
-        }
-
-        public async Task<MonthlyStatistics> GetReportsMonthlyStatistics(int year, int monthNumber)
-        {
-            string appUserId = _userService.GetCurrentUserId();
-            var dailyReport = await _mediator.Send(new GetDailyReportWithConditionsQuery(appUserId,
-                (d) => d.TimeOfCreate.Month == monthNumber && d.TimeOfCreate.Year == year));
-
-            if (dailyReport == null)
-            {
-
-            }
-
-            decimal amountSpentPerMonth = dailyReport.Reports.Sum(r => r.AmountSpent);
-
-            return new MonthlyStatistics(year, monthNumber, amountSpentPerMonth, dailyReport.Reports.Count());
-        }
+        }       
 
         public async Task<Result> RemoveReportAsync(int reportId)
         {
@@ -86,7 +71,7 @@ namespace FinanceManager.Services.Implementation
         {
             string appUserId = _userService.GetCurrentUserId();
 
-            return await _mediator.Send(new UpdateReportCommand(decimal.Parse(model.AmountSpent), model.DescriptionsOfExpenses, model.ReportId, appUserId));
+            return await _mediator.Send(new UpdateReportCommand(_mapper.Map<ReportDTO>(model), appUserId));
         }
     }
 }

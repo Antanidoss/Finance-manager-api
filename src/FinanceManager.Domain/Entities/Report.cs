@@ -17,7 +17,7 @@ namespace FinanceManager.Domain.Entities
         {
             AmountSpent = amountSpent;
             DescriptionsOfExpenses = descriptionsOfExpenses;
-            TimeOfCreate = DateTime.Today;
+            TimeOfCreate = DateTime.Now;
             DailyReport = new DailyReport();
         }
     }

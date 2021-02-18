@@ -12,7 +12,7 @@ namespace FinanceManager.Application.Common.Mappings
         public ReportDTOProfile()
         {
             CreateMap<Report, ReportDTO>()
-                .ForMember(dto => dto.TimeOfCreate, conf => conf.MapFrom(o => o.TimeOfCreate.ToString()));
+                .ForMember(dto => dto.TimeOfCreate, conf => conf.MapFrom(o => o.TimeOfCreate.ToShortTimeString()));
         }
     }
 }

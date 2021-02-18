@@ -16,13 +16,10 @@ namespace FinanceManager.Infastructure
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new ReportViewModelProfile());
-                mc.AddProfile(new DailyReportViewModelProfile());
-                mc.AddProfile(new RoleViewModelProfile());
                 mc.AddProfile(new ReportDTOProfile());
                 mc.AddProfile(new DailyReportDTOProfile());
                 mc.AddProfile(new AppUserDTOProfile());
                 mc.AddProfile(new RoleDTOProfile());
-                mc.AddProfile(new AppUserViewModelProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);

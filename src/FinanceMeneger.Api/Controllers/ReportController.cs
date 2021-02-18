@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Models;
 using FinanceManager.Services.Common.Interfaces;
 using FinanceManager.Services.Common.Models.ViewModels;
@@ -25,7 +26,7 @@ namespace FinanceManager.Api.Controllers
         }
 
         [HttpGet("get/{reportId}")]
-        public async Task<Response<ReportViewModel>> GetReportById(int reportId)
+        public async Task<Response<ReportDTO>> GetReportById(int reportId)
         {
             return await _reportService.GetReportByIdAsync(reportId);
         }

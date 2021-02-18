@@ -10,5 +10,6 @@ namespace FinanceManager.Application.Common.DTO
         public decimal AmountSpent { get; set; }
         public string DescriptionsOfExpenses { get; set; }
         public string TimeOfCreate { get; set; }
+        public int DailyReportId { get; set; }
     }
 }

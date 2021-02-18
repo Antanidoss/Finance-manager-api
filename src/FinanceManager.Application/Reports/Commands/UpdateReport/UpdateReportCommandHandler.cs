@@ -22,18 +22,18 @@ namespace FinanceManager.Application.Reports.Commands.UpdateReport
 
         public async Task<Result> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
         {
-            var report = await _reportRepository.GetReportByIdAsync(request.ReportId);
+            var report = await _reportRepository.GetReportByIdAsync(request.Report.Id);
 
             if (report == null)
             {
-                throw new NotFoundException(nameof(report), request.ReportId);
+                throw new NotFoundException(nameof(report), request.Report.Id);
             }
             if (report.DailyReport.AppUserId != request.AppUserId)
             {
                 return Result.Failure(new string[] { "Неверный id отчета" });
             }
 
-            var updateReport = new Report(request.AmountSpent, request.DescriptionsOfExpenses) { Id = request.ReportId };
+            var updateReport = new Report(request.Report.AmountSpent, request.Report.DescriptionsOfExpenses) { Id = request.Report.Id };
             await _reportRepository.UpdateReportAsync(updateReport);
 
             return Result.Success();
