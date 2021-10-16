@@ -1,4 +1,6 @@
-﻿using FinanceManager.Application.Common.Models;
+﻿using FinanceManager.Api.Attributes;
+using FinanceManager.Application.Common.DTO;
+using FinanceManager.Application.Common.Models;
 using FinanceManager.Services.Common.Interfaces;
 using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.AppUser;
@@ -25,22 +27,22 @@ namespace FinanceManager.Api.Controllers
         }   
         
         [HttpPost("auth")]
-        public async Task<Result> Authentication([FromBody]AuthenticationModel model)
+        public async Task<Response<AppUserDTO>> Authentication([FromBody]AuthenticationModel model)
         {
             return await _userService.AuthenticationAsync(model);
-        }
-
-        [HttpGet("auth/me")]
-        public async Task<Response<AuthenticationResponseModel>> Authentication()
-        {
-            return await _userService.GetCurrentUser();
-        }
+        } 
 
         [HttpGet("logout")]
-        [System.Web.Http.Authorize]
+        [Authorize]
         public async Task Logout()
         {
             await _userService.Logout();
+        }
+
+        [HttpGet("get")]
+        public async Task<Response<AppUserDTO>> GetCurrentUser()
+        {
+            return await _userService.GetUserById(_userService.GetCurrentUserId());
         }
     }
 }

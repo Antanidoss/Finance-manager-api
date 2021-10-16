@@ -1,11 +1,16 @@
-﻿using FinanceManager.Application.Common.DTO;
+﻿using FinanceManager.Application;
+using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Interfaces;
 using FinanceManager.Application.Common.Models;
 using FinanceManager.Domain.Entities;
 using FinanceManager.Infastructure.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +23,15 @@ namespace FinanceManager.Infastructure.Identity
 
         private readonly SignInManager<AppUser> _signInManager;
 
-        public UserManagerService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly AppSettings _appSettings;
+
+        private readonly IHttpContextAccessor _httpAccessor;
+        public UserManagerService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IOptions<AppSettings> appSettings, IHttpContextAccessor httpAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _appSettings = appSettings.Value;
+            _httpAccessor = httpAccessor;
         }
 
         public async Task<Result> AddToRoleAsync(string email, string roleName)
@@ -68,23 +78,45 @@ namespace FinanceManager.Infastructure.Identity
             await _signInManager.SignOutAsync();
         }       
 
-        public async Task<Result> PasswordSignInAsync(string email, string password, bool isParsistent)
+        public async Task<(AppUserDTO User, Result Result)> PasswordSignInAsync(string email, string password, bool isParsistent)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if(user == null)
             {
-                return Result.Failure(new string[] { "Эл.почта не найдена" });
+                return (null, Result.Failure(new string[] { "Эл.почта не найдена" }));
             }
 
             var check = await _userManager.CheckPasswordAsync(user, password);
             if (!check)
             {
-                return Result.Failure(new string[] { "Неверная эл.почта или пароль" });
+                return (null, Result.Failure(new string[] { "Неверная эл.почта или пароль" }));
             }
 
-            await _signInManager.PasswordSignInAsync(user, password, isParsistent, false);
+           var res = await _signInManager.PasswordSignInAsync(user, password, isParsistent, false);
+           if (!res.Succeeded)
+           {
+               return (null, Result.Failure(new string[] { "Неверная эл.почта или пароль" }));
+           }
 
-            return Result.Success();
+            var token = GenerateJwtToken(user.Id);
+            _httpAccessor.HttpContext.Response.Cookies.Append("Token", token, new CookieOptions { HttpOnly = true });
+
+            return (User: new AppUserDTO() { Id = user.Id, Email = email, Password = password, UserName = user.UserName, Token = token }, Result: Result.Success());
+        }
+
+        private string GenerateJwtToken(string userId)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] { new Claim("id", userId.ToString()) }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }

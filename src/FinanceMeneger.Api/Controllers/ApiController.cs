@@ -3,8 +3,5 @@
 namespace FinanceManager.Api.Controllers
 {
     [ApiController]
-    public class ApiController : ControllerBase
-    {
-
-    }
+    public class ApiController : ControllerBase { }
 }

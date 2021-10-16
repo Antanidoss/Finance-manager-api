@@ -1,14 +1,18 @@
+using FinanceManager.Api.Helpers;
 using FinanceManager.Application;
 using FinanceManager.Infastructure;
 using FinanceManager.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Text;
 
 namespace FinanceManeger.Api
 {
@@ -26,10 +30,35 @@ namespace FinanceManeger.Api
             services.AddRouting();
             services.AddControllers();
 
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = "FinanceManagerServer",
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("aEfc23#da.addeeeASFGGG")),
+                    ValidAudience = "FinanceManagerClient",
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(2)
+                };
+            });
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             services.AddApplication();
             services.AddPersistence(Configuration);
             services.AddIfastructure(Configuration);           
-            services.AddServices();            
+            services.AddServices();
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddSwaggerGen(s =>
             {
@@ -55,23 +84,16 @@ namespace FinanceManeger.Api
             .AllowCredentials());
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseSwagger();
             app.UseSwaggerUI(s =>
             {
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            //app.UseCookiePolicy(new CookiePolicyOptions
-            //{
-            //    MinimumSameSitePolicy = SameSiteMode.Strict,
-            //    HttpOnly = HttpOnlyPolicy.Always,
-            //    Secure = CookieSecurePolicy.Always
-            //});
-
-            app.UseAuthorization();
-
             app.UseAuthentication();
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

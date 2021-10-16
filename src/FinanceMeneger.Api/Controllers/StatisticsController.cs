@@ -1,4 +1,5 @@
-﻿using FinanceManager.Services.Common.Interfaces;
+﻿using FinanceManager.Api.Attributes;
+using FinanceManager.Services.Common.Interfaces;
 using FinanceManager.Services.Common.Models;
 using FinanceManager.Services.Common.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace FinanceManager.Api.Controllers
 {
     [Route("api/[controller]")]
-    [System.Web.Http.Authorize]
+    [Authorize]
     public class StatisticsController : ApiController
     {
         private readonly IStatisticsService _statisticsService;

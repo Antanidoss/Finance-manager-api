@@ -1,4 +1,5 @@
-﻿using FinanceManager.Application.Common.Models;
+﻿using FinanceManager.Application.Common.DTO;
+using FinanceManager.Application.Common.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace FinanceManager.Application.User.Commands.Authentication
 {
-    public class AuthenticationCommand : IRequest<Result>
+    public class AuthenticationCommand : IRequest<(AppUserDTO User, Result Result)>
     {
         public readonly string Email;
 

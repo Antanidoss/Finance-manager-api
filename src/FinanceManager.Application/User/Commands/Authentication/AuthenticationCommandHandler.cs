@@ -1,15 +1,13 @@
-﻿using FinanceManager.Application.Common.Interfaces;
+﻿using FinanceManager.Application.Common.DTO;
+using FinanceManager.Application.Common.Interfaces;
 using FinanceManager.Application.Common.Models;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Application.User.Commands.Authentication
 {
-    public class AuthenticationCommandHandler : IRequestHandler<AuthenticationCommand, Result>
+    public class AuthenticationCommandHandler : IRequestHandler<AuthenticationCommand, (AppUserDTO User, Result Result)>
     {
         private readonly IUserManagerService _userManagerService;
 
@@ -17,7 +15,7 @@ namespace FinanceManager.Application.User.Commands.Authentication
         {
             _userManagerService = userManagerService;
         }
-        public async Task<Result> Handle(AuthenticationCommand request, CancellationToken cancellationToken)
+        public async Task<(AppUserDTO ,Result)> Handle(AuthenticationCommand request, CancellationToken cancellationToken)
         {
             return await _userManagerService.PasswordSignInAsync(request.Email, request.Password, request.IsPersisitent);
         }

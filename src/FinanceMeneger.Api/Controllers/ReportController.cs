@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using FinanceManager.Api.Attributes;
 using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Models;
 using FinanceManager.Services.Common.Interfaces;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FinanceManager.Api.Controllers
 {
     [Route("api/[controller]")]
-    [System.Web.Http.Authorize]
+    [Authorize]
     public class ReportController : ApiController
     {
         private readonly IReportService _reportService;
