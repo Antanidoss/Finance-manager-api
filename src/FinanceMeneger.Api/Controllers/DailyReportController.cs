@@ -1,4 +1,5 @@
-﻿using FinanceManager.Application.Common.DTO;
+﻿using FinanceManager.Api.Attributes;
+using FinanceManager.Application.Common.DTO;
 using FinanceManager.Services.Common.Interfaces;
 using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.DailyReport;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinanceManager.Api.Controllers
 {
-    [System.Web.Http.Authorize]
+    [Authorize]
     [Route("api/[controller]")]    
     public class DailyReportController : ApiController
     {

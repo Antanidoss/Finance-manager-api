@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Interfaces;
 using FinanceManager.Application.Common.Models;
 using FinanceManager.Application.User.Command.GetUserById;
@@ -24,13 +25,11 @@ namespace FinanceManager.Services.Implementation
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private readonly IMapper _mapper;
 
-        public UserService(IMediator mediator, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        public UserService(IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
             _httpContextAccessor = httpContextAccessor;
-            _mapper = mapper;
         }
 
         public async Task<Result> AddToRoleAsync(string email, string roleName)
@@ -38,9 +37,11 @@ namespace FinanceManager.Services.Implementation
             return await _mediator.Send(new AddToRoleCommand(email, roleName));
         }
 
-        public async Task<Result> AuthenticationAsync(AuthenticationModel model)
+        public async Task<Response<AppUserDTO>> AuthenticationAsync(AuthenticationModel model)
         {
-            return await _mediator.Send(new AuthenticationCommand(model.Email, model.Password, model.IsParsistent));         
+            var res = await _mediator.Send(new AuthenticationCommand(model.Email, model.Password, model.IsParsistent));
+
+            return new Response<AppUserDTO>(res.User, res.Result);
         }
 
         public async Task<bool> CheckIsEmailBusy(string email)
@@ -48,17 +49,16 @@ namespace FinanceManager.Services.Implementation
             return await _mediator.Send(new CheckIsEmailBusyQuery(email));
         }
 
-        public async Task<Response<AuthenticationResponseModel>> GetCurrentUser()
-        {
-            var user = await _mediator.Send(new GetUserByIdQuery(GetCurrentUserId()));
-            var authenticationModel = new AuthenticationResponseModel(user, user != null ? true : false);
-
-            return new Response<AuthenticationResponseModel>(authenticationModel, Result.Success());
-        }
-
         public string GetCurrentUserId()
         {
-            return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;            
+            return (_httpContextAccessor.HttpContext.Items["User"] as AppUserDTO).Id;           
+        }
+
+        public async Task<Response<AppUserDTO>> GetUserById(string userId)
+        {
+            var user = await _mediator.Send(new GetUserByIdQuery(userId));
+
+            return new Response<AppUserDTO>(user, Result.Success());
         }
 
         public async Task Logout()

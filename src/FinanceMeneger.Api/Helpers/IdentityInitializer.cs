@@ -8,11 +8,11 @@ namespace FinanceManager.Api.Helpers
     {
         public static async Task InitializeAsync(IUserService userService, IRoleService roleService)
         {
-            if (await roleService.GetRoleByNameAsync("user") == null)
+            if ((await roleService.GetRoleByNameAsync("user")).Data == null)
             {
                 await roleService.CreateRoleAsync("user");
             }
-            if (await roleService.GetRoleByNameAsync("admin") == null)
+            if ((await roleService.GetRoleByNameAsync("admin")).Data == null)
             {
                 await roleService.CreateRoleAsync("admin");
             }

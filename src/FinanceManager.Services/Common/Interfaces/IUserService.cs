@@ -1,4 +1,5 @@
-﻿using FinanceManager.Application.Common.Models;
+﻿using FinanceManager.Application.Common.DTO;
+using FinanceManager.Application.Common.Models;
 using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.AppUser;
 using FinanceManeger.Web.Models.CreateModel;
@@ -8,12 +9,12 @@ namespace FinanceManager.Services.Common.Interfaces
 {
     public interface IUserService
     {
-        string GetCurrentUserId();
         Task<Result> RegistrationAsync(RegistrationModel model);
-        Task<Result> AuthenticationAsync(AuthenticationModel model);
+        Task<Response<AppUserDTO>> AuthenticationAsync(AuthenticationModel model);
         Task<bool> CheckIsEmailBusy(string email);
         Task<Result> AddToRoleAsync(string email, string roleName);
-        Task<Response<AuthenticationResponseModel>> GetCurrentUser();
+        Task<Response<AppUserDTO>> GetUserById(string userId);
+        string GetCurrentUserId();
         Task Logout();
     }
 }
