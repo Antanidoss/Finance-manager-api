@@ -7,7 +7,7 @@ namespace FinanceManager.Persistence.Common.Context
 {
     public class EFDbContext : IdentityDbContext<AppUser>
     {
-        public EFDbContext(DbContextOptions<EFDbContext> options) : base(options) { /*Database.EnsureDeleted(); Database.EnsureCreated();*/ }
+        public EFDbContext(DbContextOptions<EFDbContext> options) : base(options) { }
 
         public DbSet<Report> Reports { get; set; }
         public DbSet<DailyReport> DailyReports { get; set; }
