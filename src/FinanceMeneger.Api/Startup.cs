@@ -2,10 +2,12 @@ using FinanceManager.Api.Helpers;
 using FinanceManager.Application;
 using FinanceManager.Infastructure;
 using FinanceManager.Persistence;
+using FinanceManager.Persistence.Common.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -50,6 +52,7 @@ namespace FinanceManeger.Api
                     ClockSkew = TimeSpan.FromMinutes(2)
                 };
             });
+
             services.AddDistributedMemoryCache();
             services.AddSession();
 
@@ -91,13 +94,27 @@ namespace FinanceManeger.Api
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
+            app.UseDeveloperExceptionPage();
             app.UseAuthentication();
 
             app.UseMiddleware<JwtMiddleware>();
 
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<EFDbContext>();
+                if ((context.GetService<IDatabaseCreator>() as RelationalDatabaseCreator).Exists())
+                {
+                    context.Database.EnsureCreated();
+                }
+            }
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.Run(async context => {
+                context.Response.Redirect("swagger/index.html");
             });
         }
     }
