@@ -1,16 +1,11 @@
 ﻿using FinanceManager.Application.Common.Models;
 using FinanceManager.Application.DailyReports.Query.GetDailyReports;
 using FinanceManager.Application.DailyReports.Query.GetDailyReportsCount;
-using FinanceManager.Application.DailyReports.Query.GetDailyReportWithConditions;
-using FinanceManager.Application.Reports.Queries.GetReports;
 using FinanceManager.Services.Common.Interfaces;
 using FinanceManager.Services.Common.Models;
 using FinanceManager.Services.Common.Models.ViewModels;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Services.Implementation

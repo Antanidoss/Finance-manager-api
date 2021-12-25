@@ -27,36 +27,28 @@ namespace FinanceManager.Api.Helpers
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault();
             if (token != null)
-                await attachUserToContext(context, userService, token);
+                await AttachUserToContext(context, userService, token);
 
             await _next(context);
         }
 
-        private async Task attachUserToContext(HttpContext context, IUserService userService, string token)
+        private async Task AttachUserToContext(HttpContext context, IUserService userService, string token)
         {
-            try
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
             {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+            }, out SecurityToken validatedToken);
 
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = jwtToken.Claims.First(x => x.Type == "id").Value.ToString();
+            var jwtToken = (JwtSecurityToken)validatedToken;
+            var userId = jwtToken.Claims.First(x => x.Type == "id").Value.ToString();
 
-                // attach user to context on successful jwt validation
-                context.Items["User"] = (await userService.GetUserById(userId)).Data;
-            }
-            catch (Exception ex)
-            {
-                
-            }
+            context.Items["User"] = (await userService.GetUserById(userId)).Data;
         }
     }
 }

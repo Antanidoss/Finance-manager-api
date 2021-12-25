@@ -1,6 +1,5 @@
 ﻿using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Models;
-using FinanceManager.Services.Common.Models;
 using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.Report;
 using System.Threading.Tasks;

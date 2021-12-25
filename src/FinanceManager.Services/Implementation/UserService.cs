@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using FinanceManager.Application.Common.DTO;
-using FinanceManager.Application.Common.Interfaces;
+﻿using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Models;
 using FinanceManager.Application.User.Command.GetUserById;
 using FinanceManager.Application.User.Commands.AddToRole;
@@ -14,7 +12,6 @@ using FinanceManager.Services.Common.Models.ViewModels.AppUser;
 using FinanceManeger.Web.Models.CreateModel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Services.Implementation
@@ -51,7 +48,9 @@ namespace FinanceManager.Services.Implementation
 
         public string GetCurrentUserId()
         {
-            return (_httpContextAccessor.HttpContext.Items["User"] as AppUserDTO).Id;           
+            var user = _httpContextAccessor.HttpContext.Items["User"];
+
+            return user != null ? (user as AppUserDTO).Id : null;
         }
 
         public async Task<Response<AppUserDTO>> GetUserById(string userId)
@@ -68,7 +67,7 @@ namespace FinanceManager.Services.Implementation
 
         public async Task<Result> RegistrationAsync(RegistrationModel model)
         {
-            return await _mediator.Send(new RegistrationCommand(model.Name, model.Email, model.Password));          
+            return await _mediator.Send(new RegistrationCommand(model.Name, model.Email, model.Password));
         }
     }
 }

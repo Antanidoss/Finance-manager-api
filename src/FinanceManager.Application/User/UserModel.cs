@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
-
-namespace FinanceManager.Application.User
+﻿namespace FinanceManager.Application.User
 {
     public class UserModel
     {

@@ -1,10 +1,8 @@
 ﻿using FinanceManager.Application;
-using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Interfaces;
 using FinanceManager.Application.Common.Models;
 using FinanceManager.Domain.Entities;
 using FinanceManager.Infastructure.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -23,14 +21,11 @@ namespace FinanceManager.Infastructure.Identity
         private readonly SignInManager<AppUser> _signInManager;
 
         private readonly AppSettings _appSettings;
-
-        private readonly IHttpContextAccessor _httpAccessor;
-        public UserManagerService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IOptions<AppSettings> appSettings, IHttpContextAccessor httpAccessor)
+        public UserManagerService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IOptions<AppSettings> appSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _appSettings = appSettings.Value;
-            _httpAccessor = httpAccessor;
         }
 
         public async Task<Result> AddToRoleAsync(string email, string roleName)
@@ -62,14 +57,20 @@ namespace FinanceManager.Infastructure.Identity
 
         public async Task<bool> CheckIsEmailBusy(string email)
         {
-            return await _userManager.FindByEmailAsync(email) != null 
-                ? true 
-                : false;
+            return (await _userManager.FindByEmailAsync(email)) != null;
         }
 
-        public async Task<AppUser> GetUserByIdAsync(string appUserId)
+        public async Task<(AppUser User, string Token)> GetUserByIdAsync(string appUserId)
         {
-            return await _userManager.FindByIdAsync(appUserId);
+            var user = await _userManager.FindByIdAsync(appUserId);
+            if (user == null)
+            {
+                return default;
+            }
+
+            string token = GenerateJwtToken(appUserId);
+
+            return (User: user, Token: token);
         }
 
         public async Task SignOutAsync()
@@ -77,30 +78,29 @@ namespace FinanceManager.Infastructure.Identity
             await _signInManager.SignOutAsync();
         }       
 
-        public async Task<(AppUserDTO User, Result Result)> PasswordSignInAsync(string email, string password, bool isParsistent)
+        public async Task<(AppUser User, string Token, Result Result)> PasswordSignInAsync(string email, string password, bool isParsistent)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if(user == null)
             {
-                return (null, Result.Failure(new string[] { "Эл.почта не найдена" }));
+                return (null, null, Result.Failure(new string[] { "Эл.почта не найдена" }));
             }
 
             var check = await _userManager.CheckPasswordAsync(user, password);
             if (!check)
             {
-                return (null, Result.Failure(new string[] { "Неверная эл.почта или пароль" }));
+                return (null, null, Result.Failure(new string[] { "Неверная эл.почта или пароль" }));
             }
 
            var res = await _signInManager.PasswordSignInAsync(user, password, isParsistent, false);
            if (!res.Succeeded)
            {
-               return (null, Result.Failure(new string[] { "Неверная эл.почта или пароль" }));
+               return (null, null, Result.Failure(new string[] { "Неверная эл.почта или пароль" }));
            }
 
             var token = GenerateJwtToken(user.Id);
-            _httpAccessor.HttpContext.Response.Cookies.Append("Token", token, new CookieOptions { HttpOnly = true });
 
-            return (User: new AppUserDTO() { Id = user.Id, Email = email, Password = password, UserName = user.UserName, Token = token }, Result: Result.Success());
+            return (User: user, Token: token, Result: Result.Success());
         }
 
         private string GenerateJwtToken(string userId)
