@@ -11,7 +11,7 @@ namespace FinanceManager.Domain.Entities
         public int DailyReportId { get; set; }
         public DateTime TimeOfCreate { get; set; }
 
-        public Report() { }                
+        public Report() { }
 
         public Report(decimal amountSpent, string descriptionsOfExpenses)
         {

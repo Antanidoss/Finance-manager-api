@@ -1,4 +1,5 @@
-﻿using FinanceManager.Application.Common.DTO;
+﻿using AutoMapper;
+using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Interfaces;
 using FinanceManager.Application.Common.Models;
 using MediatR;
@@ -11,13 +12,26 @@ namespace FinanceManager.Application.User.Commands.Authentication
     {
         private readonly IUserManagerService _userManagerService;
 
-        public AuthenticationCommandHandler(IUserManagerService userManagerService)
+        private readonly IMapper _mapper;
+
+        public AuthenticationCommandHandler(IUserManagerService userManagerService, IMapper mapper)
         {
             _userManagerService = userManagerService;
+            _mapper = mapper;
         }
-        public async Task<(AppUserDTO ,Result)> Handle(AuthenticationCommand request, CancellationToken cancellationToken)
+        public async Task<(AppUserDTO User, Result Result)> Handle(AuthenticationCommand request, CancellationToken cancellationToken)
         {
-            return await _userManagerService.PasswordSignInAsync(request.Email, request.Password, request.IsPersisitent);
+            var passwordSignResult = await _userManagerService.PasswordSignInAsync(request.Email, request.Password, request.IsPersisitent);
+
+            if (!passwordSignResult.Result.Succeeded)
+            {
+                return (User: null, Result: passwordSignResult.Result);
+            }
+
+            var appUserDTO = _mapper.Map<AppUserDTO>(passwordSignResult.User);
+            appUserDTO.Token = passwordSignResult.Token;
+
+            return (User: appUserDTO, Result: passwordSignResult.Result);
         }
     }
 }
