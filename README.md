@@ -2,9 +2,9 @@
 ### This project is an API for the project Finance-manager-client (https://github.com/Antanidoss/Finance-manager-client).
 ---
 # Technologies: 
-- NET Core 3
-- ASP.NET Core 3
-- Entity Framework Core 3
+- NET Core 3.1
+- ASP.NET Core 3.1
+- Entity Framework Core 3.1
 - Identity
 - AutoMapper
 - MediatoR
