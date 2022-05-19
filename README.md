@@ -1,4 +1,4 @@
-## *Finance manager project*
+## *Finance manager*
 ### This project is an API for the project Finance-manager-client (https://github.com/Antanidoss/Finance-manager-client).
 ---
 # Technologies: 
