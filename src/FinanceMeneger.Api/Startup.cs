@@ -3,6 +3,7 @@ using FinanceManager.Application;
 using FinanceManager.Infastructure;
 using FinanceManager.Persistence;
 using FinanceManager.Persistence.Common.Context;
+using FinanceManager.Services.Common.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FinanceManeger.Api
 {
@@ -99,15 +101,6 @@ namespace FinanceManeger.Api
 
             app.UseMiddleware<JwtMiddleware>();
 
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<EFDbContext>();
-                if ((context.GetService<IDatabaseCreator>() as RelationalDatabaseCreator).Exists())
-                {
-                    context.Database.EnsureCreated();
-                }
-            }
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -116,6 +109,26 @@ namespace FinanceManeger.Api
             app.Run(async context => {
                 context.Response.Redirect("swagger/index.html");
             });
+
+            Task.Run(async () => await InitializeDB(app));
+        }
+
+        private async Task InitializeDB(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<EFDbContext>();
+                if (!(context.GetService<IDatabaseCreator>() as RelationalDatabaseCreator).Exists())
+                {
+                    context.Database.EnsureCreated();
+                }
+
+                var service = serviceScope.ServiceProvider;
+                var userService = service.GetRequiredService<IUserService>();
+                var roleService = service.GetRequiredService<IRoleService>();
+
+                await IdentityInitializer.InitializeAsync(userService, roleService);
+            }
         }
     }
 }

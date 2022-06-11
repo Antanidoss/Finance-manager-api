@@ -21,13 +21,13 @@ namespace FinanceManager.Api.Controllers
         }       
 
         [HttpPost("reg")]
-        public async Task<Result> Registration([FromBody]RegistrationModel model)
+        public async Task<Result> Registration([FromBody] RegistrationModel model)
         {
             return await _userService.RegistrationAsync(model);
         }   
         
         [HttpPost("auth")]
-        public async Task<Response<AppUserDTO>> Authentication([FromBody]AuthenticationModel model)
+        public async Task<Response<AppUserDTO>> Authentication([FromBody] AuthenticationModel model)
         {
             return await _userService.AuthenticationAsync(model);
         } 
