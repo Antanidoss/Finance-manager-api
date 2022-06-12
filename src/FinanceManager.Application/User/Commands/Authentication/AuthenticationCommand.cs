@@ -1,9 +1,6 @@
 ﻿using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Models;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FinanceManager.Application.User.Commands.Authentication
 {

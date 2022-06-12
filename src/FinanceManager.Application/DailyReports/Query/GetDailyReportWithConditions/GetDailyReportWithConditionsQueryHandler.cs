@@ -1,10 +1,6 @@
 ﻿using FinanceManager.Application.Common.Interfaces;
 using FinanceManager.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

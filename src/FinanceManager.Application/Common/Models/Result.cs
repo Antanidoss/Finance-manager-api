@@ -20,7 +20,7 @@ namespace FinanceManager.Application.Common.Models
             return new Result(succeeded: true, errors: null);
         }
 
-        public static Result Failure(IEnumerable<string> errors)
+        public static Result Failure(params string[] errors)
         {
             return new Result(succeeded: false, errors);
         }

@@ -23,9 +23,7 @@ namespace FinanceManager.Application.User.Command.GetUserById
             var getUserByIdResult = await _userManagerService.GetUserByIdAsync(request.AppUserId);
 
             if (getUserByIdResult.User == null)
-            {
                 return null;
-            }
 
             var appUserDTO = _mapper.Map<AppUserDTO>(getUserByIdResult.User);
             appUserDTO.Token = getUserByIdResult.Token;
