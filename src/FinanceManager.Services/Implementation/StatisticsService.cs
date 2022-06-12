@@ -26,19 +26,15 @@ namespace FinanceManager.Services.Implementation
         {
             string appUserId = _userService.GetCurrentUserId();
             int dailyReportCount = await _mediator.Send(new GetDailyReportsCountQuery(appUserId));
-            var dailyReports = await _mediator.Send(new GetDailyReportsWithConditionsQuery(0, dailyReportCount, appUserId,
-                (d) => d.TimeOfCreate.Month == monthNumber && d.TimeOfCreate.Year == year));
+            var dailyReports = await _mediator.Send(new GetDailyReportsWithConditionsQuery(
+                skip: 0, take: dailyReportCount, appUserId, (d) => d.TimeOfCreate.Month == monthNumber && d.TimeOfCreate.Year == year));
 
             if (dailyReports == null)
-            {
-                return new Response<MonthlyStatistics>(null, Result.Failure(new string[] { "" }));
-            }
+                return new Response<MonthlyStatistics>(null, Result.Failure(new string[] { string.Empty }));
 
-            decimal amountSpentPerMonth = 0;
+            decimal amountSpentPerMonth = decimal.Zero;
             foreach (var dailyReport in dailyReports)
-            {
                 amountSpentPerMonth += dailyReport.Reports.Sum(r => r.AmountSpent);
-            }
 
             var monthlyStatistics = new MonthlyStatistics(
                 year: year,

@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Persistence.Common.Repositories
@@ -51,7 +50,7 @@ namespace FinanceManager.Persistence.Common.Repositories
 
         public async Task<IEnumerable<Report>> GetReportsAsync(int skip, int take, int dailyReportId, Func<Report, bool> func)
         {
-            return  _context.Reports
+            return _context.Reports
                 .Where(r => r.DailyReportId == dailyReportId)
                 .Where(func)
                 .Skip(skip)

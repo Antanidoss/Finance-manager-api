@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace FinanceManager.Application.Common.Models
 {
@@ -19,12 +17,12 @@ namespace FinanceManager.Application.Common.Models
 
         public static Result Success()
         {
-            return new Result(true, new string[] { });
+            return new Result(succeeded: true, errors: null);
         }
 
         public static Result Failure(IEnumerable<string> errors)
         {
-            return new Result(false, errors);
+            return new Result(succeeded: false, errors);
         }
     }
 }

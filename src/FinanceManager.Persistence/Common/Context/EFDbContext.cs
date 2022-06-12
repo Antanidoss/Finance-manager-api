@@ -13,7 +13,7 @@ namespace FinanceManager.Persistence.Common.Context
         public DbSet<DailyReport> DailyReports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {           
+        {
             modelBuilder.ApplyConfiguration(new ReportModelConfiguration());
             modelBuilder.ApplyConfiguration(new DailyReportModelConfiguration());
 
