@@ -10,12 +10,7 @@ namespace FinanceManager.Infastructure.Models
         {
             return result.Succeeded
                 ? Result.Success()
-                : Result.Failure(result.Errors.Select(e => e.Description));
-        }       
-
-        public static Result EmailIsBusy()
-        {
-            return Result.Failure(new[] { "Эта эл.почта уже используется на сайте" });
+                : Result.Failure(result.Errors.Select(e => e.Description).ToArray());
         }
     }
 }

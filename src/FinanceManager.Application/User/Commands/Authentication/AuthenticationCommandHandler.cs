@@ -24,9 +24,7 @@ namespace FinanceManager.Application.User.Commands.Authentication
             var passwordSignResult = await _userManagerService.PasswordSignInAsync(request.Email, request.Password, request.IsPersisitent);
 
             if (!passwordSignResult.Result.Succeeded)
-            {
                 return (User: null, Result: passwordSignResult.Result);
-            }
 
             var appUserDTO = _mapper.Map<AppUserDTO>(passwordSignResult.User);
             appUserDTO.Token = passwordSignResult.Token;

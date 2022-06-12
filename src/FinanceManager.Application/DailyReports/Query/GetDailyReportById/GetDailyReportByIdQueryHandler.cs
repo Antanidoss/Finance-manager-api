@@ -25,9 +25,7 @@ namespace FinanceManager.Application.DailyReports.Query.GetDailyReportById
             var dailyReport =  await _dailyReportRepository.GetDailyReportByIdAsync(request.DailyReportId);
 
             if(dailyReport == null)
-            {
                 throw new NotFoundException(nameof(dailyReport), request.DailyReportId);
-            }
 
             return _mapper.Map<DailyReportDTO>(dailyReport);
         }

@@ -1,9 +1,7 @@
 ﻿using FinanceManager.Domain.Entities;
 using MediatR;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace FinanceManager.Application.DailyReports.Query.GetDailyReportWithConditions
 {

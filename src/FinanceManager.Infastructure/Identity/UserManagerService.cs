@@ -21,6 +21,7 @@ namespace FinanceManager.Infastructure.Identity
         private readonly SignInManager<AppUser> _signInManager;
 
         private readonly AppSettings _appSettings;
+
         public UserManagerService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IOptions<AppSettings> appSettings)
         {
             _userManager = userManager;
@@ -38,7 +39,7 @@ namespace FinanceManager.Infastructure.Identity
         public async Task<Result> CreateUserAsync(string name, string email, string password)
         {
             if (await CheckIsEmailBusy(email))
-                return IdentityResultExtensions.EmailIsBusy();
+                return Result.Failure(ErrorMessageConstants.EmailIsBusy);
 
             var user = new AppUser() { UserName = name, Email = email };
             var result = await _userManager.CreateAsync(user, password);
@@ -75,15 +76,15 @@ namespace FinanceManager.Infastructure.Identity
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
-                return (null, null, Result.Failure(new string[] { "Эл.почта не найдена" }));
+                return (null, null, Result.Failure(ErrorMessageConstants.EmailNotFound));
 
             var checkPassword = await _userManager.CheckPasswordAsync(user, password);
             if (!checkPassword)
-                return (null, null, IdentityResult.I.Failure(new string[] { "Неверная эл.почта или пароль" }));
+                return (null, null, Result.Failure(ErrorMessageConstants.InvalidEmailOrPassword));
 
             var res = await _signInManager.PasswordSignInAsync(user, password, isParsistent, false);
             if (!res.Succeeded)
-                return (null, null, Result.Failure(new string[] { "Неверная эл.почта или пароль" }));
+                return (null, null, Result.Failure(ErrorMessageConstants.InvalidEmailOrPassword));
 
             return (User: user, Token: GenerateJwtToken(user.Id), Result: Result.Success());
         }
