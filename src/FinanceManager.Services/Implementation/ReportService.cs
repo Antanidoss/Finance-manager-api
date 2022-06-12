@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using FinanceManager.Application.Common.DTO;
 using FinanceManager.Application.Common.Models;
-using FinanceManager.Application.DailyReports.Query.GetDailyReportsCount;
-using FinanceManager.Application.DailyReports.Query.GetDailyReportWithConditions;
 using FinanceManager.Application.Reports.Commands.AddReport;
 using FinanceManager.Application.Reports.Commands.RemoveReport;
 using FinanceManager.Application.Reports.Commands.UpdateReport;
@@ -10,12 +8,9 @@ using FinanceManager.Application.Reports.Queries.GetReportById;
 using FinanceManager.Application.Reports.Queries.GetReportCount;
 using FinanceManager.Application.Reports.Queries.GetReports;
 using FinanceManager.Services.Common.Interfaces;
-using FinanceManager.Services.Common.Models;
 using FinanceManager.Services.Common.Models.ViewModels;
 using FinanceManager.Services.Common.Models.ViewModels.Report;
 using MediatR;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinanceManager.Services.Implementation
@@ -46,7 +41,7 @@ namespace FinanceManager.Services.Implementation
             string appUserId = _userService.GetCurrentUserId();
             var report = await _mediator.Send(new GetReportByIdQuery(reportId, appUserId));
 
-            return new Response<ReportDTO>(report, Result.Success());           
+            return new Response<ReportDTO>(report, Result.Success());
         }
 
         public async Task<Response<GetReportsResponseModel>> GetReportsAsync(int skip, int take, int dailyReportId)
@@ -58,7 +53,7 @@ namespace FinanceManager.Services.Implementation
             var getReportsResponseModel = new GetReportsResponseModel(reports, reportsCount);
 
             return new Response<GetReportsResponseModel>(getReportsResponseModel, Result.Success());
-        }       
+        }
 
         public async Task<Result> RemoveReportAsync(int reportId)
         {

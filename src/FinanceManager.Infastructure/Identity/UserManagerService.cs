@@ -31,17 +31,14 @@ namespace FinanceManager.Infastructure.Identity
         public async Task<Result> AddToRoleAsync(string email, string roleName)
         {
             var appUser = await _userManager.FindByEmailAsync(email);
-            var result = await _userManager.AddToRoleAsync(appUser, roleName);
 
-            return result.ToApplicationResult();
+            return (await _userManager.AddToRoleAsync(appUser, roleName)).ToApplicationResult();
         }
 
         public async Task<Result> CreateUserAsync(string name, string email, string password)
         {
             if (await CheckIsEmailBusy(email))
-            {
                 return IdentityResultExtensions.EmailIsBusy();
-            }
 
             var user = new AppUser() { UserName = name, Email = email };
             var result = await _userManager.CreateAsync(user, password);
@@ -64,43 +61,31 @@ namespace FinanceManager.Infastructure.Identity
         {
             var user = await _userManager.FindByIdAsync(appUserId);
             if (user == null)
-            {
                 return default;
-            }
 
-            string token = GenerateJwtToken(appUserId);
-
-            return (User: user, Token: token);
+            return (User: user, Token: GenerateJwtToken(appUserId));
         }
 
         public async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
-        }       
+        }
 
         public async Task<(AppUser User, string Token, Result Result)> PasswordSignInAsync(string email, string password, bool isParsistent)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if(user == null)
-            {
+            if (user == null)
                 return (null, null, Result.Failure(new string[] { "Эл.почта не найдена" }));
-            }
 
-            var check = await _userManager.CheckPasswordAsync(user, password);
-            if (!check)
-            {
+            var checkPassword = await _userManager.CheckPasswordAsync(user, password);
+            if (!checkPassword)
+                return (null, null, IdentityResult.I.Failure(new string[] { "Неверная эл.почта или пароль" }));
+
+            var res = await _signInManager.PasswordSignInAsync(user, password, isParsistent, false);
+            if (!res.Succeeded)
                 return (null, null, Result.Failure(new string[] { "Неверная эл.почта или пароль" }));
-            }
 
-           var res = await _signInManager.PasswordSignInAsync(user, password, isParsistent, false);
-           if (!res.Succeeded)
-           {
-               return (null, null, Result.Failure(new string[] { "Неверная эл.почта или пароль" }));
-           }
-
-            var token = GenerateJwtToken(user.Id);
-
-            return (User: user, Token: token, Result: Result.Success());
+            return (User: user, Token: GenerateJwtToken(user.Id), Result: Result.Success());
         }
 
         private string GenerateJwtToken(string userId)

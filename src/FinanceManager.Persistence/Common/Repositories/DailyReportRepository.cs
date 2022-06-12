@@ -57,10 +57,10 @@ namespace FinanceManager.Persistence.Common.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, string appUserId, 
+        public async Task<IEnumerable<DailyReport>> GetDailyReportsAsync(int skip, int take, string appUserId,
             Func<DailyReport, bool> func)
         {
-            return  _context.DailyReports
+            return _context.DailyReports
                 .Where(d => d.AppUserId == appUserId)
                 .Include(d => d.Reports)
                 .Where(func)
@@ -76,8 +76,8 @@ namespace FinanceManager.Persistence.Common.Repositories
                 .Include(d => d.Reports)
                 .ToListAsync();
 
-            return dailyReports.Count() != 0 
-                ? dailyReports.Last() 
+            return dailyReports.Count() != 0
+                ? dailyReports.Last()
                 : null;
         }
     }

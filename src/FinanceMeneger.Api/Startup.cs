@@ -34,33 +34,13 @@ namespace FinanceManeger.Api
             services.AddRouting();
             services.AddControllers();
 
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = true;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = "FinanceManagerServer",
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("aEfc23#da.addeeeASFGGG")),
-                    ValidAudience = "FinanceManagerClient",
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromMinutes(2)
-                };
-            });
+            AddAuthentication(services);
 
             services.AddDistributedMemoryCache();
             services.AddSession();
-
             services.AddApplication();
             services.AddPersistence(Configuration);
-            services.AddIfastructure(Configuration);           
+            services.AddIfastructure(Configuration);
             services.AddServices();
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
@@ -68,9 +48,9 @@ namespace FinanceManeger.Api
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });                      
+            });
 
-            services.AddCors();            
+            services.AddCors();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -106,8 +86,10 @@ namespace FinanceManeger.Api
                 endpoints.MapControllers();
             });
 
-            app.Run(async context => {
+            app.Run(context =>
+            {
                 context.Response.Redirect("swagger/index.html");
+                return Task.CompletedTask;
             });
 
             Task.Run(async () => await InitializeDB(app));
@@ -129,6 +111,30 @@ namespace FinanceManeger.Api
 
                 await IdentityInitializer.InitializeAsync(userService, roleService);
             }
+        }
+
+        private void AddAuthentication(IServiceCollection services)
+        {
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = "FinanceManagerServer",
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings").Value)),
+                    ValidAudience = "FinanceManagerClient",
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(2)
+                };
+            });
         }
     }
 }

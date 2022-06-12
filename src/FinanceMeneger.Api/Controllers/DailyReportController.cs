@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace FinanceManager.Api.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]    
+    [Route("api/[controller]")]
     public class DailyReportController : ApiController
     {
         private readonly IDailyReportService _dailyReportService;

@@ -22,7 +22,6 @@ namespace FinanceManager.Services.Implementation
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-
         public UserService(IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
